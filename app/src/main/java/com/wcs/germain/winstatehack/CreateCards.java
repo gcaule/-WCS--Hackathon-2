@@ -45,6 +45,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreateCards extends AppCompatActivity {
 
     private RelativeLayout mCard;
@@ -140,8 +143,8 @@ public class CreateCards extends AppCompatActivity {
                 mColor = "card_white";
             }
         });
-
     }
+  
     private void showLinearCharacters() {
         mCardImage = findViewById(R.id.createcards_card_image);
         Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
@@ -277,6 +280,7 @@ public class CreateCards extends AppCompatActivity {
                 ref.child("Cards").child(id).setValue(card);
 
                 progressBar.setVisibility(View.GONE);
+
                 getImageResponse(new ImageResponseListener() {
                     @Override
                     public void onResult(String response) {
@@ -393,4 +397,9 @@ public class CreateCards extends AppCompatActivity {
         void onError(String error);
     }
 
+                Toast.makeText(CreateCards.this, "Votre carte a bien été créee !", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CreateCards.this, CreateCards.class));
+            }
+        });
+    }
 }

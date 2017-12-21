@@ -11,4 +11,12 @@
     <color name="colorBlue">#1E3278</color>
     <color name="colorGrey">#EBF0F0</color>
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="cardBlueColor">#82b1ff</color>
+    <color name="cardGreenColor">#a5d6a7</color>
+    <color name="cardOrangeColor">#ffd180</color>
+    <color name="cardRedColor">#ff8a80</color>
+    <color name="cardPurpleColor">#b388ff</color>
+    <color name="cardBrownColor">#bcaaa4</color>
+    <color name="cardTealColor">#80cbc4</color>
 </resources>

@@ -44,6 +44,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".MenuCards" />
         <activity android:name=".CreateCards" />
+        <activity android:name=".CardsCollection"></activity>
+
     </application>
 
 </manifest>
