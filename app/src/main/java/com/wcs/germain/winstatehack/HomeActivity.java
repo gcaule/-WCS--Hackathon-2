@@ -118,6 +118,7 @@ Log.e(TAG, userId);
             public void onClick(View view) {
                 Intent intentCard = new Intent(HomeActivity.this, ContactActivity.class);
                 startActivity(intentCard);
+                finish();
             }
         });
 
