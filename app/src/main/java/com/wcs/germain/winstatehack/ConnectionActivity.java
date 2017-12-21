@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -25,6 +26,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ConnectionActivity extends AppCompatActivity {
+
+    private static final String TAG = "proutprout connexion";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +106,6 @@ public class ConnectionActivity extends AppCompatActivity {
                                                                 progressBar.setVisibility(View.VISIBLE);
                                                                 validate.setEnabled(false);
 
-                                                                SharedPreferences user = getSharedPreferences("Login", 0);
-                                                                user.edit().putString("userID", databaseRef.child("user").push().getKey()).apply();
-                                                                user.edit().putString("userMail", mailValue).apply();
 
                                                                 startActivity(new Intent
                                                                         (ConnectionActivity.this,
@@ -127,10 +127,14 @@ public class ConnectionActivity extends AppCompatActivity {
 
                                         } else {
 
-                                            User user = new User(firstNameValue, mailValue, passwordValue);
                                             DatabaseReference userRef = database.getReference("user");
                                             String userKey = userRef.push().getKey();
+                                            User user = new User(firstNameValue, mailValue, passwordValue, userKey);
                                             userRef.child(userKey).setValue(user);
+                                            SharedPreferences userPref = getSharedPreferences("Login", 0);
+                                            userPref.edit().putString("userID", userKey).apply();
+                                            userPref.edit().putString("userMail", mailValue).apply();
+                                            Log.e(TAG, databaseRef.child("user").push().getKey());
                                             Toast.makeText(ConnectionActivity.this,
                                                     getString(R.string.user_created),
                                                     Toast.LENGTH_SHORT).show();
