@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlue"
+    tools:context="com.wcs.germain.winstatehack.Cards.CreateCards">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/roundedborder">
+
+        <TextView
+            android:id="@+id/menucards_tv_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/createcards_tv_top"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlue"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorGrey">
+
+        <LinearLayout
+            android:id="@+id/createcards_linear_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/createcards_card_grey"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/card_grey" />
+
+            <Button
+                android:id="@+id/createcards_card_blue"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/card_blue" />
+
+            <Button
+                android:id="@+id/createcards_card_yellow"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/card_yellow" />
+
+            <Button
+                android:id="@+id/createcards_card_white"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/card_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/createcards_linear_character"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/createcards_card_oracle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="L'oracle"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/colorBlue" />
+
+            <TextView
+                android:id="@+id/createcards_card_alchemist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="L'Alchemiste"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/colorBlue" />
+
+            <TextView
+                android:id="@+id/createcards_card_magicien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Le Magicien"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/colorBlue"/>
+
+            <TextView
+                android:id="@+id/createcards_card_compteuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="La Compteuse"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/colorBlue" />
+
+            <TextView
+                android:id="@+id/createcards_card_philosophe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Le Philosophe"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/colorBlue" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/createcards_tv_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/createcards_create_title"
+            android:textColor="@color/colorBlue"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/createcards_card"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:layout_below="@+id/createcards_tv_title2"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/card_white">
+
+            <ImageView
+                android:id="@+id/createcards_card_image"
+                android:layout_width="130dp"
+                android:layout_height="160dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp" />
+
+            <TextView
+                android:id="@+id/createcards_card_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="11dp"
+                android:gravity="center"
+                android:hint="@string/createcards_hint"
+                android:textColor="@color/colorBlue"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/createcards_changecolor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/buttonbordercard"
+        android:padding="5dp"
+        android:text="Choisir la couleur"
+        android:textColor="@color/colorBlue"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/createcards_changeimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/createcards_changecolor"
+        android:layout_alignBottom="@+id/createcards_changecolor"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/buttonbordercard"
+        android:padding="5dp"
+        android:text="Choisir un personnage"
+        android:textColor="@color/colorBlue"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/createcards_changecolor"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/createcards_settext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/buttonbordercard"
+            android:hint="Ajoute un texte : J'aime chez toi les..."
+            android:textColor="@color/colorBlue"
+            android:padding="5dp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/createcards_send"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/buttonbordercard"
+            android:gravity="center"
+            android:text="Ok"
+            android:textColor="@color/colorBlue"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/createcards_validate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/buttonbordercard"
+        android:gravity="center"
+        android:text="@string/createcards_validate"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/colorBlue"
+        android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/createcards_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/createcards_validate"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>
