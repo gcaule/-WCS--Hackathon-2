@@ -25,19 +25,18 @@ public class HomeActivity extends AppCompatActivity {
         TextView totalWins = findViewById(R.id.total_wins);
         TextView status = findViewById(R.id.status);
 
-        // TODO remove comments when assets is ready
         // Assign font
-//        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
-//        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
-//
-//        nbHackteurs.setTypeface(boldFont);
-//        nbTotalWins.setTypeface(boldFont);
-//        nbpersonalWins.setTypeface(boldFont);
-//        userName.setTypeface(boldFont);
-//        hackteurs.setTypeface(regularFont);
-//        personalWins.setTypeface(regularFont);
-//        totalWins.setTypeface(regularFont);
-//        status.setTypeface(regularFont);
+        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+
+        nbHackteurs.setTypeface(boldFont);
+        nbTotalWins.setTypeface(boldFont);
+        nbpersonalWins.setTypeface(boldFont);
+        userName.setTypeface(boldFont);
+        hackteurs.setTypeface(regularFont);
+        personalWins.setTypeface(regularFont);
+        totalWins.setTypeface(regularFont);
+        status.setTypeface(regularFont);
 
         // TODO Assign values from database to textviews
 

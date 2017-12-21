@@ -50,9 +50,8 @@ public class ContactAdapter  extends BaseAdapter{
         String nom = mListeContact.get(i).getFirstName() ;
         nomContact.setText(nom);
 
-        // TODO remove comments when assets is ready
-//        Typeface regularFont = Typeface.createFromAsset(mActivity.getAssets(), "fonts/Montserrat_Regular.otf");
-//        nomContact.setTypeface(regularFont);
+        Typeface regularFont = Typeface.createFromAsset(mActivity.getAssets(), "fonts/Montserrat_Regular.otf");
+        nomContact.setTypeface(regularFont);
 
         return itemView;
     }
