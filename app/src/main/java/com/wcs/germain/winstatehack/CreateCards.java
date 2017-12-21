@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +33,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.wcs.germain.winstatehack.Cards.CardModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,9 +44,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CreateCards extends AppCompatActivity {
 
@@ -74,7 +71,9 @@ public class CreateCards extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_create_cards);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
         Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
@@ -144,7 +143,7 @@ public class CreateCards extends AppCompatActivity {
             }
         });
     }
-  
+
     private void showLinearCharacters() {
         mCardImage = findViewById(R.id.createcards_card_image);
         Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
@@ -280,6 +279,8 @@ public class CreateCards extends AppCompatActivity {
                 ref.child("Cards").child(id).setValue(card);
 
                 progressBar.setVisibility(View.GONE);
+                Toast.makeText(CreateCards.this, "Votre carte a bien été créee !", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CreateCards.this, CreateCards.class));
 
                 getImageResponse(new ImageResponseListener() {
                     @Override
@@ -293,7 +294,6 @@ public class CreateCards extends AppCompatActivity {
 
                     }
                 });
-
             }
         });
     }
@@ -397,9 +397,4 @@ public class CreateCards extends AppCompatActivity {
         void onError(String error);
     }
 
-                Toast.makeText(CreateCards.this, "Votre carte a bien été créee !", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CreateCards.this, CreateCards.class));
-            }
-        });
-    }
 }
