@@ -104,7 +104,7 @@ public class ConnectionActivity extends AppCompatActivity {
                                                                 validate.setEnabled(false);
 
                                                                 SharedPreferences user = getSharedPreferences("Login", 0);
-                                                                user.edit().putString("userID", databaseRef.child("user").getKey()).apply();
+                                                                user.edit().putString("userID", databaseRef.child("user").push().getKey()).apply();
                                                                 user.edit().putString("userMail", mailValue).apply();
 
                                                                 startActivity(new Intent
