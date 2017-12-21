@@ -24,9 +24,9 @@
         <activity
             android:name=".ConnectionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Cards.MenuCards" />
-        <activity android:name=".Cards.CreateCards" />
-        <activity android:name=".Cards.CardsCollection"></activity>
+        <activity android:name=".MenuCards" />
+        <activity android:name=".CreateCards" />
+        <activity android:name=".CardsCollection"></activity>
     </application>
 
 </manifest>

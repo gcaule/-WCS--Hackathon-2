@@ -1,4 +1,4 @@
-package com.wcs.germain.winstatehack.Cards;
+package com.wcs.germain.winstatehack;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.wcs.germain.winstatehack.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
 
     private final static int DELAY = 1000;
 
-    private List<Pair<CardModel, Integer>> mItems;
+    private List<Pair<Pair<CardModel, String>, Integer>> mItems;
 
     private DeckAdapter mAdapter;
 
@@ -47,24 +46,19 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
         setContentView(R.layout.activity_cards_collection);
 
         mColors  = getResources().getIntArray(R.array.cardsBackgroundColors);
-        mItems = new ArrayList<>();
+        mItems = new ArrayList<Pair<Pair<CardModel, String>, Integer>>();
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("Card").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child("Cards").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                mItems.clear();
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     CardModel cardModel = new CardModel();
                     cardModel = dsp.getValue(CardModel.class);
                     mItems.add(newItem(cardModel));
+                    mAdapter.notifyDataSetChanged();
                 }
-
-                mAdapter = new DeckAdapter(CardsCollection.this, mItems);
-
-                RossDeckView mDeckLayout = (RossDeckView) findViewById(R.id.decklayout);
-                mDeckLayout.setAdapter(mAdapter);
-                mDeckLayout.setActionsListener(CardsCollection.this);
-                mDeckLayout.setProximityListener(CardsCollection.this);
             }
 
             @Override
@@ -73,18 +67,25 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
             }
         });
 
+        mAdapter = new DeckAdapter(CardsCollection.this, mItems);
+
+        final RossDeckView mDeckLayout = (RossDeckView) findViewById(R.id.decklayout);
+        mDeckLayout.setAdapter(mAdapter);
+        mDeckLayout.setActionsListener(CardsCollection.this);
+        mDeckLayout.setProximityListener(CardsCollection.this);
 
 
         mLeftView = findViewById(R.id.left);
         mUpView = findViewById(R.id.up);
         mRightView = findViewById(R.id.right);
         mDownView = findViewById(R.id.down);
+
     }
 
     @Override
     public boolean onDismiss(@NonNull FlingChief.Direction direction, @NonNull View view) {
 
-        Toast.makeText(this, "Dismiss to " + direction, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Nop!", Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -109,13 +110,13 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
 
     @Override
     public boolean onTapped() {
-        Toast.makeText(this, "Tapped", Toast.LENGTH_SHORT).show();
         return true;
     }
 
+
+
     @Override
     public boolean onDoubleTapped() {
-        Toast.makeText(this, "Double tapped", Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -129,9 +130,9 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
     }
 
 
-    private Pair<CardModel, Integer> newItem(CardModel cardModel){
+    private Pair<Pair<CardModel, String>, Integer> newItem(CardModel cardModel){
 
-        Pair<CardModel, Integer> res = new Pair<>(cardModel, mColors[mCount]);
+        Pair<Pair<CardModel, String>, Integer> res = new Pair<>(new Pair<>(cardModel, "USERTOSENDTEST"), mColors[mCount]);
         mCount = (mCount >= mColors.length - 1) ? 0 : mCount + 1;
         return res;
     }
@@ -139,7 +140,7 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
 
     private void newItemWithDelay(int delay) {
         for (int i = 0; i < mItems.size(); i++) {
-            final Pair<CardModel, Integer> res = newItem(mItems.get(i).first);
+            final Pair<Pair<CardModel, String>, Integer> res = newItem(mItems.get(i).first.first);
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override

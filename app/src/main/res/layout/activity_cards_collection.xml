@@ -4,7 +4,32 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.wcs.germain.winstatehack.Cards.CardsCollection">
+        tools:context="com.wcs.germain.winstatehack.CardsCollection">
+
+    <TextView
+        android:id="@+id/deck_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Votre deck"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:textColor="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/deck_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Je choisis cette carte !"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:background="@drawable/buttonbordercard"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/colorBlue" />
 
         <View
             android:layout_width="5dp"
@@ -55,3 +80,4 @@
             derdidaz:stack_scale=".1"/>
 
     </RelativeLayout>
+
