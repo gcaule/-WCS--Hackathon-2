@@ -9,6 +9,7 @@ public class User {
     String firstName;
     String mail;
     String password;
+    int nbWin;
 
     public User() {
     }
@@ -17,6 +18,7 @@ public class User {
         this.firstName = name;
         this.mail = mail;
         this.password = password;
+        this.nbWin = 0;
     }
 
     public String getFirstName() {
@@ -43,4 +45,11 @@ public class User {
         this.password = password;
     }
 
+    public int getNbWin() {
+        return nbWin;
+    }
+
+    public void setNbWin(int nbWin) {
+        this.nbWin = nbWin;
+    }
 }
