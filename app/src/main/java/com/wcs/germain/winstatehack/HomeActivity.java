@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "proutprout";
-    private String statusText;
+    private String statusText ;
     private int totalNbHackteurs = 0;
     private int totalNbwins =0;
 
@@ -68,11 +68,16 @@ Log.e(TAG, userId);
                     tvUserName.setText(myUser.getFirstName());
                     Log.e(TAG, myUser.getFirstName());
                     nbpersonalWins.setText(String.valueOf(myUser.getNbWin()));
+                    if(myUser.getNbWin()<100){
+                        statusText = "Ami du bonheur";
+                    }
                     if(myUser.getNbWin()<50){
                         statusText = "Stagiaire";
                     }
                     if(myUser.getNbWin()<10){
                         statusText = "Noob";
+                    }else{
+                        statusText = "Donneur de love";
                     }
 
                     status.setText(statusText);
