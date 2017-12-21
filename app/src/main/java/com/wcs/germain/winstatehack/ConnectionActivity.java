@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +39,7 @@ public class ConnectionActivity extends AppCompatActivity {
         final EditText mail = findViewById(R.id.connection_mail);
         final EditText password = findViewById(R.id.connection_password);
 
-        Button validate = findViewById(R.id.connection_validate);
+        final Button validate = findViewById(R.id.connection_validate);
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +99,9 @@ public class ConnectionActivity extends AppCompatActivity {
                                                             if(dataSnapshot!=null && dataSnapshot.getChildren()!=null &&
                                                                     dataSnapshot.getChildren().iterator().hasNext()){
 
+                                                                LinearLayout progressBar = findViewById(R.id.progressBarLayout);
+                                                                progressBar.setVisibility(View.VISIBLE);
+                                                                validate.setEnabled(false);
                                                                 startActivity(new Intent
                                                                         (ConnectionActivity.this,
                                                                                 HomeActivity.class));
