@@ -1,5 +1,6 @@
 package com.wcs.germain.winstatehack;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,12 +31,11 @@ public class ContactActivity extends AppCompatActivity {
         TextView contacts = findViewById(R.id.contact_tv);
         TextView addContact = findViewById(R.id.contact_new);
 
-        // TODO remove comments when assets is ready
         // Assign font
-//        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
-//        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
-//        contacts.setTypeface(boldFont);
-//        addContact.setTypeface(boldFont);
+        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+        contacts.setTypeface(boldFont);
+        addContact.setTypeface(boldFont);
 
         // on charge les référent et on applique l'adapter
         initFirebase();

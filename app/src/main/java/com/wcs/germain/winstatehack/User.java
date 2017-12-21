@@ -1,7 +1,7 @@
 package com.wcs.germain.winstatehack;
 
 /**
- * Created by wilder on 21/12/17.
+ * Created by apprenti on 21/12/17.
  */
 
 public class User {
@@ -30,4 +30,17 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
