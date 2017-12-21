@@ -27,7 +27,7 @@ public class MenuCards extends AppCompatActivity {
         seeDeck.setTypeface(regularFont);
         createCards.setTypeface(regularFont);
         rules.setTypeface(regularFont);
-
+      
         seeDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
