@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">WinStateHack</string>
+    <string name="menucards_top_title">Choisissez la carte que vous allez envoyer</string>
+    <string name="menucards_fromcollection">- Depuis mon Deck de collection</string>
+    <string name="menucards_addcards">- Créer une nouvelle carte</string>
+    <string name="menucards_help">- J\'ai besoin d\'aide !</string>
+    <string name="createcards_tv_top">Créer une nouvelle carte</string>
+    <string name="createcards_create_title">Personnaliser la carte</string>
+    <string name="createcards_hint">Ajoute un texte qui fera sourire ton destinaire !</string>
+    <string name="createcards_validate">Valider!</string>
 </resources>

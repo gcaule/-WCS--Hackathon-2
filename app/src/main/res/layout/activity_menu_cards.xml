@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlue"
+    tools:context="com.wcs.germain.winstatehack.Cards.MenuCards">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/roundedborder"
+    android:id="@+id/linearLayout">
+    <TextView
+        android:id="@+id/menucards_tv_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menucards_top_title"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:textColor="@color/colorBlue" />
+</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:id="@+id/menucards_tv_fromcollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/menucards_fromcollection"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlue"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="@drawable/roundedborder"/>
+
+        <TextView
+            android:id="@+id/menucards_tv_addcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/menucards_tv_fromcollection"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/roundedborder"
+            android:padding="10dp"
+            android:text="@string/menucards_addcards"
+            android:textColor="@color/colorBlue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/menucards_tv_addcard"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/roundedborder"
+            android:padding="10dp"
+            android:text="@string/menucards_help"
+            android:textColor="@color/colorBlue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
