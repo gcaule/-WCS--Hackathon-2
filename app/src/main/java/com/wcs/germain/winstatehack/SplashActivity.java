@@ -28,9 +28,22 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent i = new Intent(SplashActivity.this, ConnectionActivity.class);
-                startActivity(i);
-                finish();
+                SharedPreferences myPrefs = getApplication().getSharedPreferences("Login", MODE_PRIVATE);
+                String userID = myPrefs.getString("userID",null);
+                String userMail = myPrefs.getString("userMail",null);
+
+                if (userMail != null && userID != null )
+                {
+                    Intent i = new Intent(SplashActivity.this, HomeActivity.class);
+                    startActivity(i);
+                    finish();
+
+                } else {
+
+                    Intent i = new Intent(SplashActivity.this, ConnectionActivity.class);
+                    startActivity(i);
+                    finish();
+                }
 
             }
         }, SPLASH_TIME_OUT);
