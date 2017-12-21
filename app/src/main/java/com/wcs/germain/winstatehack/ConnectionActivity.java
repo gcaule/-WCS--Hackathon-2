@@ -127,9 +127,9 @@ public class ConnectionActivity extends AppCompatActivity {
 
                                         } else {
 
-                                            User user = new User(firstNameValue, mailValue, passwordValue);
                                             DatabaseReference userRef = database.getReference("user");
                                             String userKey = userRef.push().getKey();
+                                            User user = new User(firstNameValue, mailValue, passwordValue, userKey);
                                             userRef.child(userKey).setValue(user);
                                             SharedPreferences userPref = getSharedPreferences("Login", 0);
                                             userPref.edit().putString("userID", userKey).apply();

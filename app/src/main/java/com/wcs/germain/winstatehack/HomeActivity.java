@@ -57,7 +57,7 @@ Log.e(TAG, userId);
         totalWins.setTypeface(regularFont);
         status.setTypeface(regularFont);
 
-        // TODO Assign values from database to textviews
+        // Assign values from database to textviews
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference UserRef = database.getReference().child("user");
         UserRef.orderByKey().equalTo(userId).addValueEventListener(new ValueEventListener() {
