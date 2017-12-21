@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="250dp"
+    android:gravity="center"
+    android:background="@android:color/black">
+
+    <RelativeLayout
+        android:id="@+id/item_card"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
+        android:layout_below="@+id/createcards_tv_title2"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/card_white">
+
+        <ImageView
+            android:id="@+id/item_card_image"
+            android:layout_width="130dp"
+            android:layout_height="160dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp" />
+
+        <TextView
+            android:id="@+id/item_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="11dp"
+            android:gravity="center"
+            android:hint="@string/createcards_hint"
+            android:textColor="@color/colorBlue"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</RelativeLayout>
