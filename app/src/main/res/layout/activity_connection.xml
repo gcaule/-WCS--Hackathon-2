@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorYellow"
+    tools:context="com.wcs.germain.winstatehack.ConnectionActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/connection_title"
+            android:text="@string/connection_title"
+            android:textSize="32sp"
+            android:textColor="@color/colorBlue"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/connection_hint"
+            android:text="@string/connection_hint"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlue"
+            android:padding="20dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/connection_firstname"
+            android:background="@drawable/rounded_edittext"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlue"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:hint="@string/connection_firstname"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:id="@+id/connection_mail"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlue"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:hint="@string/connection_mail"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:id="@+id/connection_password"
+            android:inputType="textPassword"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlue"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:hint="@string/connection_password"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/connection_validate"
+            android:background="@drawable/button_shape"
+            android:shadowColor="@color/colorDarkGrey"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/connection_validate"
+            android:textSize="18sp"
+            android:textColor="@color/colorYellow"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
