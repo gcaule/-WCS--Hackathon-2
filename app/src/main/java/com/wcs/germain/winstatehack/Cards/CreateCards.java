@@ -2,6 +2,7 @@ package com.wcs.germain.winstatehack.Cards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.DrawableRes;
@@ -46,33 +47,27 @@ public class CreateCards extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_cards);
 
+        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+
         TextView titleTop = findViewById(R.id.menucards_tv_top);
-
-
-
+        titleTop.setTypeface(boldFont);
         TextView title2 = findViewById(R.id.createcards_tv_title2);
-
-        RelativeLayout card2 = findViewById(R.id.createcards_card);
-
-
-
-
-
-
-
+        title2.setTypeface(regularFont);
 
         showLinearColor();
         showLinearCharacters();
         showMessage();
         createCard();
-
-
-
     }
 
     private void showLinearColor() {
         mCard = findViewById(R.id.createcards_card);
+        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+
         TextView changeColor = findViewById(R.id.createcards_changecolor);
+        changeColor.setTypeface(regularFont);
         changeColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,9 +81,13 @@ public class CreateCards extends AppCompatActivity {
             }
         });
         Button grey = findViewById(R.id.createcards_card_grey);
+        grey.setTypeface(regularFont);
         Button blue = findViewById(R.id.createcards_card_blue);
+        blue.setTypeface(regularFont);
         Button yellow = findViewById(R.id.createcards_card_yellow);
+        yellow.setTypeface(regularFont);
         Button white = findViewById(R.id.createcards_card_white);
+        white.setTypeface(regularFont);
 
         grey.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +120,12 @@ public class CreateCards extends AppCompatActivity {
     }
     private void showLinearCharacters() {
         mCardImage = findViewById(R.id.createcards_card_image);
+        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+
         TextView changeImage = findViewById(R.id.createcards_changeimage);
+        changeImage.setTypeface(regularFont);
+
         changeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,10 +139,15 @@ public class CreateCards extends AppCompatActivity {
             }
         });
         TextView oracle = findViewById(R.id.createcards_card_oracle);
+        oracle.setTypeface(regularFont);
         TextView alchemist = findViewById(R.id.createcards_card_alchemist);
+        alchemist.setTypeface(regularFont);
         TextView magicien = findViewById(R.id.createcards_card_magicien);
+        magicien.setTypeface(regularFont);
         TextView compteuse = findViewById(R.id.createcards_card_compteuse);
+        compteuse.setTypeface(regularFont);
         final TextView philosophe = findViewById(R.id.createcards_card_philosophe);
+        philosophe.setTypeface(regularFont);
 
         oracle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,8 +183,15 @@ public class CreateCards extends AppCompatActivity {
     }
     private void showMessage(){
         mTextCard = findViewById(R.id.createcards_card_textview);
+
+        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+        mTextCard.setTypeface(boldFont);
+
         final EditText message = findViewById(R.id.createcards_settext);
+        message.setTypeface(regularFont);
         final Button send = findViewById(R.id.createcards_send);
+        send.setTypeface(regularFont);
         send.setVisibility(View.GONE);
 
         message.addTextChangedListener(new TextWatcher() {
@@ -211,6 +227,11 @@ public class CreateCards extends AppCompatActivity {
     }
     private void createCard() {
         Button validate = findViewById(R.id.createcards_validate);
+
+        Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+
+        validate.setTypeface(boldFont);
         
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,11 +244,11 @@ public class CreateCards extends AppCompatActivity {
                 int width = mCard.getWidth();
                 int height = mCard.getHeight();
                 List<String> authorizedId = new ArrayList<>();
-                authorizedId.add(id);
+                //authorizedId.add(userid);
 
                 String text = mTextCard.getText().toString();
                 // TODO trouver le moyen de set le type
-                CardModel card = new CardModel(id, gravity, width, height, mColor, mImage, text, null, null,authorizedId );
+                CardModel card = new CardModel(id, gravity, width, height, mColor, mImage, text, null, null,null );
 
                 ref.child("Cards").child(id).setValue(card);
 
