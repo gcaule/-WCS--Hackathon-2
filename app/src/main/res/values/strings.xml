@@ -25,6 +25,7 @@
     <string name="incorrect_password">Mot de passe incorrect !</string>
 
     <string name="user_created">Joueur créé !</string>
+    <string name="getacard_title">%1$s vous a envoyé cette carte !</string>
 
 
 </resources>

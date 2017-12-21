@@ -1,5 +1,6 @@
 package com.wcs.germain.winstatehack;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -39,12 +40,18 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
     private int[] mColors;
 
     private int mCount = 0;
+    private String mIdToSend;
+    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards_collection);
 
+        mIdToSend = getIntent().getExtras().getString("idToSend");
+        // Shared pref
+        SharedPreferences user = getSharedPreferences("Login", 0);
+        mUserId = user.getString("userID","");
         mColors  = getResources().getIntArray(R.array.cardsBackgroundColors);
         mItems = new ArrayList<Pair<Pair<CardModel, String>, Integer>>();
 
@@ -132,7 +139,7 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
 
     private Pair<Pair<CardModel, String>, Integer> newItem(CardModel cardModel){
 
-        Pair<Pair<CardModel, String>, Integer> res = new Pair<>(new Pair<>(cardModel, "USERTOSENDTEST"), mColors[mCount]);
+        Pair<Pair<CardModel, String>, Integer> res = new Pair<>(new Pair<>(cardModel, mIdToSend), mColors[mCount]);
         mCount = (mCount >= mColors.length - 1) ? 0 : mCount + 1;
         return res;
     }

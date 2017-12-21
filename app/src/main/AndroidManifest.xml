@@ -26,7 +26,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".MenuCards" />
         <activity android:name=".CreateCards" />
-        <activity android:name=".CardsCollection"></activity>
+        <activity android:name=".CardsCollection" />
+        <activity android:name=".GetACard"></activity>
     </application>
 
 </manifest>

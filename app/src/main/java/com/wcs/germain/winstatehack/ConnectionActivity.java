@@ -106,7 +106,6 @@ public class ConnectionActivity extends AppCompatActivity {
                                                                 progressBar.setVisibility(View.VISIBLE);
                                                                 validate.setEnabled(false);
 
-
                                                                 startActivity(new Intent
                                                                         (ConnectionActivity.this,
                                                                                 HomeActivity.class));

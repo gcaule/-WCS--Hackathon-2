@@ -2,6 +2,7 @@ package com.wcs.germain.winstatehack;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,11 +33,18 @@ public class CreateCards extends AppCompatActivity {
     private TextView mTextCard;
     private String mColor = "";
     private String mImage = "";
+    private String mIdToSend;
+    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_cards);
+
+        mIdToSend = getIntent().getExtras().getString("idToSend");
+        // Shared pref
+        SharedPreferences user = getSharedPreferences("Login", 0);
+        mUserId = user.getString("userID","");
 
         Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
         Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
@@ -229,23 +237,29 @@ public class CreateCards extends AppCompatActivity {
             public void onClick(View view) {
                 final ProgressBar progressBar = findViewById(R.id.createcards_progressbar);
                 progressBar.setVisibility(View.VISIBLE);
+                // Creation de la carte
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                 String id = ref.push().getKey();
                 int gravity = mCard.getGravity();
                 int width = mCard.getWidth();
                 int height = mCard.getHeight();
                 List<String> authorizedId = new ArrayList<>();
-                //authorizedId.add(userid);
-
+                authorizedId.add(mUserId);
                 String text = mTextCard.getText().toString();
                 // TODO trouver le moyen de set le type
-                CardModel card = new CardModel(id, gravity, width, height, mColor, mImage, text, null, null,null );
-
+                CardModel card = new CardModel(id, gravity, width, height, mColor, mImage, text, mUserId, null,authorizedId );
                 ref.child("Cards").child(id).setValue(card);
 
+                // La carte s'envoi a la personne
+                final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
+                String idRef2 = ref2.push().getKey();
+                ref.child("SentCards").child(idRef2).child("cardId").setValue(id);
+                ref.child("SentCards").child(idRef2).child("userSenderId").setValue(mUserId);
+                ref.child("SentCards").child(idRef2).child("userReceiverId").setValue(mIdToSend);
+                ref.child("SentCards").child(idRef2).child("readStatus").setValue(false);
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(CreateCards.this, "Votre carte a bien été créee !", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CreateCards.this, CreateCards.class));
+                Toast.makeText(CreateCards.this, "Votre carte a bien été créee et envoyée!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CreateCards.this, HomeActivity.class));
             }
         });
     }

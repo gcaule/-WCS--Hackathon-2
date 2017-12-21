@@ -2,12 +2,14 @@ package com.wcs.germain.winstatehack;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,12 +18,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "proutprout";
     private String statusText;
     private int totalNbHackteurs = 0;
     private int totalNbwins =0;
+    private CardModel mCard;
 
 
     @Override
@@ -31,10 +37,11 @@ public class HomeActivity extends AppCompatActivity {
 
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
-        String userId = user.getString("userID","");
+        final String userId = user.getString("userID","");
 Log.e(TAG, userId);
 
         ImageView btnSendCard = findViewById(R.id.send_card);
+        ImageView btnSendSmile = findViewById(R.id.send_smile);
         final TextView nbHackteurs = findViewById(R.id.nb_hackteurs);
         final TextView nbTotalWins = findViewById(R.id.nb_total_wins);
         final TextView nbpersonalWins = findViewById(R.id.nb_personal_wins);
@@ -113,6 +120,50 @@ Log.e(TAG, userId);
             public void onClick(View view) {
                 Intent intentCard = new Intent(HomeActivity.this, ContactActivity.class);
                 startActivity(intentCard);
+            }
+        });
+
+        //Go to smile
+        // TODO mettre le vrai link
+        final List<CardModel> listCard = new ArrayList<>();
+        btnSendSmile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentSmile = new Intent(HomeActivity.this, GetACard.class);
+                intentSmile.putExtra("object", mCard);
+                startActivity(intentSmile);
+            }
+        });
+
+        // On recupere les Cards recus !
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("SentCards").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dsp : dataSnapshot.getChildren()){
+                    String userReceveirId = dsp.child("userReceiverId").getValue(String.class);
+                    if (userReceveirId.equals(userId)){
+                        String id = dsp.child("cardId").getValue(String.class);
+                        ref.child("Cards").orderByKey().equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                CardModel cardModel = dataSnapshot.getValue(CardModel.class);
+                                mCard = cardModel;
+                                listCard.add(cardModel);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 

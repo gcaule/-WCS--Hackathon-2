@@ -14,6 +14,8 @@ public class MenuCards extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_cards);
 
+        final String idToSend = getIntent().getExtras().getString("idToSend");
+
         TextView topTitle = findViewById(R.id.menucards_tv_top);
         TextView seeDeck = findViewById(R.id.menucards_tv_fromcollection);
         TextView createCards = findViewById(R.id.menucards_tv_addcard);
@@ -28,17 +30,23 @@ public class MenuCards extends AppCompatActivity {
         createCards.setTypeface(regularFont);
         rules.setTypeface(regularFont);
 
+        final Intent intent = new Intent(MenuCards.this, CardsCollection.class);
+        intent.putExtra("idToSend", idToSend);
         seeDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuCards.this, CardsCollection.class));
+                final Intent intent = new Intent(MenuCards.this, CardsCollection.class);
+                intent.putExtra("idToSend", idToSend);
+                startActivity(intent);
             }
         });
 
         createCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuCards.this, CreateCards.class));
+                final Intent intent = new Intent(MenuCards.this, CreateCards.class);
+                intent.putExtra("idToSend", idToSend);
+                startActivity(intent);
             }
         });
     }
