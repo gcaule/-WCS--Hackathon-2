@@ -46,6 +46,9 @@ public class ConnectionActivity extends AppCompatActivity {
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final LinearLayout progressBar = findViewById(R.id.progressBarLayout);
+                progressBar.setVisibility(View.VISIBLE);
+                validate.setEnabled(false);
 
                 final String firstNameValue = firstName.getText().toString();
                 final String mailValue = mail.getText().toString();
@@ -65,6 +68,8 @@ public class ConnectionActivity extends AppCompatActivity {
                             getString(R.string.invalid_entries),
                             Toast.LENGTH_SHORT).show();
                     firstName.setError(getResources().getString(R.string.invalid_entry));
+                    progressBar.setVisibility(View.GONE);
+                    validate.setEnabled(true);
                 }
 
                 if (!isMailOK) {
@@ -72,6 +77,8 @@ public class ConnectionActivity extends AppCompatActivity {
                     Toast.makeText(ConnectionActivity.this,
                             getString(R.string.invalid_entries),
                             Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    validate.setEnabled(true);
                 }
 
                 if (!TextUtils.isEmpty(passwordValue)) {
@@ -81,6 +88,8 @@ public class ConnectionActivity extends AppCompatActivity {
                                 getString(R.string.invalid_entries),
                                 Toast.LENGTH_SHORT).show();
                         firstName.setError(getResources().getString(R.string.invalid_entry));
+                        progressBar.setVisibility(View.GONE);
+                        validate.setEnabled(true);;
 
                     } else {
 
@@ -102,11 +111,6 @@ public class ConnectionActivity extends AppCompatActivity {
                                                             if(dataSnapshot!=null && dataSnapshot.getChildren()!=null &&
                                                                     dataSnapshot.getChildren().iterator().hasNext()){
 
-                                                                LinearLayout progressBar = findViewById(R.id.progressBarLayout);
-                                                                progressBar.setVisibility(View.VISIBLE);
-                                                                validate.setEnabled(false);
-
-
                                                                 startActivity(new Intent
                                                                         (ConnectionActivity.this,
                                                                                 HomeActivity.class));
@@ -116,6 +120,8 @@ public class ConnectionActivity extends AppCompatActivity {
                                                                 Toast.makeText(ConnectionActivity.this,
                                                                         getString(R.string.incorrect_password),
                                                                         Toast.LENGTH_SHORT).show();
+                                                                progressBar.setVisibility(View.GONE);
+                                                                validate.setEnabled(true);
                                                             }
                                                         }
 
@@ -157,7 +163,8 @@ public class ConnectionActivity extends AppCompatActivity {
                     Toast.makeText(ConnectionActivity.this,
                             getString(R.string.invalid_entries),
                             Toast.LENGTH_SHORT).show();
-
+                    progressBar.setVisibility(View.GONE);
+                    validate.setEnabled(true);
                 }
             }
         });
