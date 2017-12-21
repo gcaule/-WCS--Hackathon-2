@@ -8,4 +8,24 @@
     <string name="createcards_create_title">Personnaliser la carte</string>
     <string name="createcards_hint">Ajoute un texte qui fera sourire ton destinaire !</string>
     <string name="createcards_validate">Valider!</string>
+
+    <!-- Connection activity-->
+    <string name="connection_title">Contamination positive en cours</string>
+    <string name="connection_hint">Le virus est déjà un peu en toi. Le minimum d\'info pour protéger ton compte</string>
+
+    <string name="connection_firstname">Ton prénom</string>
+    <string name="connection_mail">Ton mail</string>
+    <string name="connection_password">Mot de passe</string>
+    <string name="connection_password_confirm">Confirmer mot de passe</string>
+    <string name="connection_validate">Commencer !</string>
+
+    <string name="invalid_password">Les mots de passe ne correspondent pas</string>
+    <string name="invalid_entries">Veuillez remplir tous les champs</string>
+    <string name="invalid_entry">Format incorrect !</string>
+    <string name="incorrect_password">Mot de passe incorrect !</string>
+
+    <string name="user_created">Joueur créé !</string>
+
+
+
 </resources>

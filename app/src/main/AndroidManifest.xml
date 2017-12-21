@@ -9,14 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Cards.CreateCards">
+        <activity android:name=".HomeActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ContactActivity"></activity>
+        <activity android:name=".ConnectionActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Cards.MenuCards" />
+        <activity android:name=".Cards.CreateCards" />
 
     </application>
 
