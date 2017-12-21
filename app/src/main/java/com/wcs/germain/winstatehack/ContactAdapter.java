@@ -2,12 +2,15 @@ package com.wcs.germain.winstatehack;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.wcs.germain.winstatehack.Cards.MenuCards;
 
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class ContactAdapter  extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         mInflater = (LayoutInflater) mActivity.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = mInflater.inflate(R.layout.contacts_item,null);
+        final View itemView = mInflater.inflate(R.layout.contacts_item,null);
 
         TextView nomContact = itemView.findViewById(R.id.nom_contact);
         String nom = mListeContact.get(i).getFirstName() ;
@@ -52,6 +55,13 @@ public class ContactAdapter  extends BaseAdapter{
 
         Typeface regularFont = Typeface.createFromAsset(mActivity.getAssets(), "fonts/Montserrat_Regular.otf");
         nomContact.setTypeface(regularFont);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemView.getContext().startActivity(new Intent(itemView.getContext(), MenuCards.class));
+            }
+        });
 
         return itemView;
     }

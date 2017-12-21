@@ -15,14 +15,17 @@
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".ContactActivity"></activity>
         <activity android:name=".ConnectionActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Cards.MenuCards" />
+        <activity android:name=".Cards.CreateCards" />
+
     </application>
 
 </manifest>
