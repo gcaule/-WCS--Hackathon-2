@@ -89,6 +89,15 @@ public class CreateCards extends AppCompatActivity {
         createCard();
     }
 
+    // Retour sur la page Connection si pression du bouton retour Android
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(CreateCards.this, MenuCards.class);
+        startActivity(intent);
+    }
+
     private void showLinearColor() {
         mCard = findViewById(R.id.createcards_card);
         Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");

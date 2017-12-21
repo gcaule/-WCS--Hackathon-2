@@ -1,5 +1,6 @@
 package com.wcs.germain.winstatehack;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,15 @@ public class ContactActivity extends AppCompatActivity {
         // on charge les référent et on applique l'adapter
         initFirebase();
         addContactFirebaseListener();
+    }
+
+    // Retour sur la page Connection si pression du bouton retour Android
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(ContactActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 
     private void initFirebase() {

@@ -126,4 +126,9 @@ Log.e(TAG, userId);
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
 }

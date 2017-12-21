@@ -45,4 +45,13 @@ public class MenuCards extends AppCompatActivity {
             }
         });
     }
+
+    // Retour sur la page Connection si pression du bouton retour Android
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(MenuCards.this, ContactActivity.class);
+        startActivity(intent);
+    }
 }
