@@ -113,7 +113,7 @@ public class GetACard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent iResponse = new Intent(GetACard.this, MenuCards.class);
-                iResponse.putExtra("reponse", mSenderId);
+                iResponse.putExtra("response", mSenderId);
                 startActivity(iResponse);
             }
         });
