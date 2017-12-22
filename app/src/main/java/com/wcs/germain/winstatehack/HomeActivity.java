@@ -1,11 +1,14 @@
 package com.wcs.germain.winstatehack;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AndroidException;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,10 +46,11 @@ public class HomeActivity extends AppCompatActivity {
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
         final String userId = user.getString("userID","");
-Log.e(TAG, userId);
+        Log.e(TAG, userId);
 
         ImageView btnSendCard = findViewById(R.id.send_card);
         ImageView btnSendSmile = findViewById(R.id.send_smile);
+        ImageView btnDeconnection = findViewById(R.id.deconnection);
         final TextView nbHackteurs = findViewById(R.id.nb_hackteurs);
         final TextView nbTotalWins = findViewById(R.id.nb_total_wins);
         final TextView nbpersonalWins = findViewById(R.id.nb_personal_wins);
@@ -132,6 +136,35 @@ Log.e(TAG, userId);
                 startActivity(intentCard);
                 finish();
             }
+        });
+
+        // Déconnection
+        btnDeconnection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                builder.setMessage(getString(R.string.deconnection))
+                        .setCancelable(false)
+                        .setPositiveButton(getString(R.string.deconnection_yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                SharedPreferences userPref = getSharedPreferences("Login", 0);
+                                userPref.edit().clear().apply();
+                                Intent intentConnection = new Intent(HomeActivity.this, ConnectionActivity.class);
+                                startActivity(intentConnection);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.deconnection_no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        })
+                        //Set your icon here
+                        .setTitle(getString(R.string.deconnection_title));
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+
         });
 
         //Go to smile
