@@ -7,6 +7,7 @@ import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class GetACard extends AppCompatActivity {
 
     private CardModel mCard;
     private String mIdUserSent;
+    private String mSenderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,11 @@ public class GetACard extends AppCompatActivity {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     String id = dsp.getKey();
                     ref.child("SentCards").child(id).child("readStatus").setValue(true);
-                    String senderId = dsp.child("userSenderId").getValue(String.class);
+                    mSenderId = dsp.child("userSenderId").getValue(String.class);
 
-                    if(senderId!=null){
+                    if(mSenderId!=null){
                         // Username
-                        ref.child("user").child(senderId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        ref.child("user").child(mSenderId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 User user = dataSnapshot.getValue(User.class);
@@ -105,6 +107,16 @@ public class GetACard extends AppCompatActivity {
         personnage.setBackground(resources.getDrawable(resourceId));
 
 
+        // Bouton répondre
+        TextView repondre = findViewById(R.id.getacard_btn_répondre);
+        repondre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iResponse = new Intent(GetACard.this, MenuCards.class);
+                iResponse.putExtra("reponse", mSenderId);
+                startActivity(iResponse);
+            }
+        });
 
 
     }
