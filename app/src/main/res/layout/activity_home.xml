@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBlue"
-
+    android:background="@drawable/background"
     tools:context="com.wcs.germain.winstatehack.HomeActivity">
 
     <LinearLayout
@@ -22,6 +20,7 @@
             android:layout_weight="3"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/nb_hackteurs"
                 android:layout_width="wrap_content"
@@ -39,6 +38,7 @@
                 android:textColor="@color/colorBlue"
                 android:textSize="15sp"
                 android:text="hackteurs"/>
+
             <TextView
                 android:id="@+id/nb_total_wins"
                 android:layout_width="wrap_content"
@@ -48,6 +48,7 @@
                 android:textSize="20sp"
                 android:paddingTop="10dp"
                 tools:text="586"/>
+
             <TextView
                 android:id="@+id/total_wins"
                 android:layout_width="wrap_content"
@@ -58,20 +59,23 @@
                 android:text="wins"/>
 
         </LinearLayout>
+
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="90dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
-            android:src="@drawable/white_circle"
+            android:background="@drawable/round_win"
             android:scaleType="fitCenter"
             android:layout_gravity="center"/>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
@@ -81,6 +85,7 @@
                 android:textSize="20sp"
                 android:paddingTop="10dp"
                 tools:text="Yves"/>
+
             <TextView
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
@@ -90,6 +95,7 @@
                 android:textSize="15sp"
                 android:singleLine="true"
                 android:text="branleur de chèvres"/>
+
             <TextView
                 android:id="@+id/nb_personal_wins"
                 android:layout_width="wrap_content"
@@ -99,6 +105,7 @@
                 android:textSize="20sp"
                 android:paddingTop="10dp"
                 tools:text="36"/>
+
             <TextView
                 android:id="@+id/personal_wins"
                 android:layout_width="wrap_content"
@@ -107,6 +114,7 @@
                 android:textColor="@color/colorBlue"
                 android:textSize="15sp"
                 android:text="wins"/>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -118,39 +126,62 @@
         android:id="@+id/earth"
 
         />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/nbre_smile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="129dp"
+        android:layout_marginRight="129dp"
+        android:text="@string/sourires"
+        android:textColor="@color/colorYellow"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+
+</RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.75"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:id="@+id/deconnection"
             android:layout_height="match_parent"
-            android:src="@drawable/white_circle"
-            android:padding="15dp"
-            android:layout_gravity="left" />
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:background="@drawable/round_invalidate"
+            android:layout_margin="15dp"
+            android:padding="50dp"
+            android:layout_gravity="start" />
 
         <ImageView
             android:id="@+id/send_smile"
-            android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:src="@drawable/white_circle"
-            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:background="@drawable/round_interactions"
+            android:layout_margin="15dp"
+            android:padding="50dp"
             android:layout_gravity="center_horizontal" />
 
         <ImageView
             android:id="@+id/send_card"
-            android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:src="@drawable/white_circle"
-            android:padding="10dp"
-            android:layout_gravity="right" />
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:background="@drawable/round_community"
+            android:layout_margin="15dp"
+            android:padding="50dp"
+            android:layout_gravity="end" />
 
     </LinearLayout>
 

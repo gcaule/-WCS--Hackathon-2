@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class GetACard extends AppCompatActivity {
     private static final String TAG = "creator key : ";
     private CardModel mCard;
     private String mIdUserSent;
+    private String mSenderId;
     private User mSenderUser;
     private String mSenderKey;
     private int nbWinSender;
@@ -76,11 +78,11 @@ public class GetACard extends AppCompatActivity {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     String id = dsp.getKey();
                     ref.child("SentCards").child(id).child("readStatus").setValue(true);
-                    String senderId = dsp.child("userSenderId").getValue(String.class);
+                    mSenderId = dsp.child("userSenderId").getValue(String.class);
 
-                    if(senderId!=null){
+                    if(mSenderId!=null){
                         // Username
-                        ref.child("user").child(senderId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        ref.child("user").child(mSenderId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 mSenderUser = dataSnapshot.getValue(User.class);
@@ -97,14 +99,23 @@ public class GetACard extends AppCompatActivity {
                             }
                         });
                     }
-
-
                 }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
 
-
-                //ref.child("readStatus").setValue(true);
+        // On rajoute la carte dans le Autorized id
+        ref.child("Cards").child(mCard.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                CardModel card = dataSnapshot.getValue(CardModel.class);
+                List<String> list = card.getAuthorizedId();
+                list.add(userId);
+                ref.child("Cards").child(mCard.getId()).child("authorizedId").setValue(list);
             }
 
             @Override
@@ -147,6 +158,18 @@ public class GetACard extends AppCompatActivity {
 
             }
         });
+
+        // Bouton répondre
+        TextView repondre = findViewById(R.id.getacard_btn_répondre);
+        repondre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iResponse = new Intent(GetACard.this, MenuCards.class);
+                iResponse.putExtra("response", mSenderId);
+                startActivity(iResponse);
+            }
+        });
+
 
     }
 
