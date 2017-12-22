@@ -32,8 +32,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -291,7 +294,7 @@ public class CreateCards extends AppCompatActivity {
                 final ProgressBar progressBar = findViewById(R.id.createcards_progressbar);
                 progressBar.setVisibility(View.VISIBLE);
                 // Creation de la carte
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                 String id = ref.push().getKey();
                 int gravity = mCard.getGravity();
                 int width = mCard.getWidth();
@@ -302,6 +305,21 @@ public class CreateCards extends AppCompatActivity {
                 // TODO trouver le moyen de set le type
                 CardModel card = new CardModel(id, gravity, width, height, mColor, mImage, text, mUserId, null, authorizedId);
                 ref.child("Cards").child(id).setValue(card);
+
+                //On ajoute les points à l'user
+                ref.child("user").child(mUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        int nbWin = user.getNbWin();
+                        ref.child("user").child(mUserId).child("nbWin").setValue(nbWin+1);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 // La carte s'envoi a la personne
                 final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
