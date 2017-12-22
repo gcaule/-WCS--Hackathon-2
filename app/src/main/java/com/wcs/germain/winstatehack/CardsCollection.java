@@ -2,6 +2,7 @@ package com.wcs.germain.winstatehack;
 
 import android.content.SharedPreferences;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +54,12 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
         setContentView(R.layout.activity_cards_collection);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
+        final Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+
+        TextView deckTitle = findViewById(R.id.deck_title);
+
+        deckTitle.setTypeface(boldFont);
+
         mIdToSend = getIntent().getExtras().getString("idToSend");
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
@@ -66,9 +73,10 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mItems.clear();
                 if (dataSnapshot.getValue() == null){
-                    TextView bottom = findViewById(R.id.deck_ok);
-                    bottom.setVisibility(View.VISIBLE);
-                    bottom.setText("Vous n'avez aucune carte à votre collection :(");
+                    TextView deckOK = findViewById(R.id.deck_ok);
+                    deckOK.setVisibility(View.VISIBLE);
+                    deckOK.setTypeface(boldFont);
+                    deckOK.setText("Vous n'avez aucune carte à votre collection :(");
                 }
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     CardModel cardModel = new CardModel();
@@ -86,15 +94,17 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
                 }
 
                 if (mItems.size() > 0) {
-                    TextView nbreCards = findViewById(R.id.deck_nbre);
-                    nbreCards.setVisibility(View.VISIBLE);
-                    nbreCards.setText(getResources().getString(R.string.deck_nbrecartes, String.valueOf(mItems.size())));
+                    TextView deckNombre = findViewById(R.id.deck_nbre);
+                    deckNombre.setVisibility(View.VISIBLE);
+                    deckNombre.setTypeface(boldFont);
+                    deckNombre.setText(getResources().getString(R.string.deck_nbrecartes, String.valueOf(mItems.size())));
                 }
                 else {
 
-                    TextView bottom = findViewById(R.id.deck_ok);
-                    bottom.setVisibility(View.VISIBLE);
-                    bottom.setText("Vous n'avez aucune carte à votre collection :(");
+                    TextView deckOK = findViewById(R.id.deck_ok);
+                    deckOK.setVisibility(View.VISIBLE);
+                    deckOK.setTypeface(boldFont);
+                    deckOK.setText("Vous n'avez aucune carte à votre collection :(");
 
                 }
 
