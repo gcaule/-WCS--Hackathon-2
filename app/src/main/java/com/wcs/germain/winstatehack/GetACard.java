@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,6 +54,26 @@ public class GetACard extends AppCompatActivity {
                     mSenderId = dsp.child("userSenderId").getValue(String.class);
 
                     if(mSenderId!=null){
+
+                        // +nbWin CreatorId
+                        if (mSenderId != mCard.getCreatorId()){
+                            ref.child("user").child(mCard.getCreatorId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    User user = dataSnapshot.getValue(User.class);
+                                    int nbWin = user.getNbWin();
+                                    ref.child("user").child(mCard.getCreatorId()).child("nbWin").setValue(nbWin+1);
+                                    Toast.makeText(GetACard.this, "Le createur de cette carte a été recompensé !", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+
                         // Username
                         ref.child("user").child(mSenderId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override

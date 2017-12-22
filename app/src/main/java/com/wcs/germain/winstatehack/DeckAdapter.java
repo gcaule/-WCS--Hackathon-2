@@ -87,6 +87,22 @@ public class DeckAdapter extends ArrayAdapter<Pair<Pair<CardModel, String>, Inte
                     ref.child("SentCards").child(id).child("userReceiverId").setValue(userToSend);
                     ref.child("SentCards").child(id).child("readStatus").setValue(false);
 
+                    //On ajoute les points à l'user
+                    ref.child("user").child(mUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            int nbWin = user.getNbWin();
+                            ref.child("user").child(mUserId).child("nbWin").setValue(nbWin+1);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    // On rajoute la carte aux authorized
                     ref.child("Cards").child(model.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
