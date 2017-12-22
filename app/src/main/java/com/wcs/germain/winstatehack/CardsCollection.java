@@ -137,6 +137,7 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
 
         finish();
         Intent intent = new Intent(CardsCollection.this, MenuCards.class);
+        intent.putExtra("idToSend", mIdToSend);
         startActivity(intent);
     }
 

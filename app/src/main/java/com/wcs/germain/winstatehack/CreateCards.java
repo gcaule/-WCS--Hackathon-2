@@ -59,8 +59,8 @@ public class CreateCards extends AppCompatActivity {
     private RelativeLayout mCard;
     private ImageView mCardImage;
     private TextView mTextCard;
-    private String mColor = "";
-    private String mImage = "";
+    private String mColor = "card_white";
+    private String mImage = "oracle";
     private String mIdToSend;
     private String mUserId;
     private Context context;
@@ -106,6 +106,7 @@ public class CreateCards extends AppCompatActivity {
 
         finish();
         Intent intent = new Intent(CreateCards.this, MenuCards.class);
+        intent.putExtra("idToSend", mIdToSend);
         startActivity(intent);
     }
 
