@@ -27,6 +27,7 @@
     <string name="user_created">Joueur créé !</string>
     <string name="getacard_title">%1$s vous a envoyé cette carte !</string>
     <string name="sourires">%1$s sourires</string>
+    <string name="deck_nbrecartes">Vous avez %1$s cartes ! Bien joué !</string>
 
 
 </resources>

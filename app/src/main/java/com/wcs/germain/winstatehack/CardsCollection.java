@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.db.rossdeckview.FlingChief;
@@ -67,8 +68,24 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     CardModel cardModel = new CardModel();
                     cardModel = dsp.getValue(CardModel.class);
-                    mItems.add(newItem(cardModel));
-                    mAdapter.notifyDataSetChanged();
+                    List<String> listAuthorized = cardModel.getAuthorizedId();
+
+                    if (listAuthorized != null) {
+                        for (int i = 0; i < listAuthorized.size(); i++) {
+                            if (listAuthorized.get(i).equals(mUserId)) {
+                                mItems.add(newItem(cardModel));
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        TextView nbreCards = findViewById(R.id.deck_nbre);
+                        nbreCards.setVisibility(View.VISIBLE);
+                        nbreCards.setText(getResources().getString(R.string.deck_nbrecartes, String.valueOf(mItems.size())));
+                    }
+                    else {
+                        Toast.makeText(CardsCollection.this, "Vous n'avez aucune carte à votre collection :(", Toast.LENGTH_SHORT).show();
+                    }
+                    
                 }
             }
 
@@ -98,7 +115,7 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
     public void onBackPressed() {
 
         finish();
-        Intent intent = new Intent(CardsCollection.this, CreateCards.class);
+        Intent intent = new Intent(CardsCollection.this, MenuCards.class);
         startActivity(intent);
     }
 
