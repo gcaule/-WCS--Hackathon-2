@@ -1,9 +1,11 @@
 package com.wcs.germain.winstatehack;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,7 +27,9 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_contact);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         contactListView = findViewById(R.id.listview_contact);
         TextView contacts = findViewById(R.id.contact_tv);
@@ -40,6 +44,15 @@ public class ContactActivity extends AppCompatActivity {
         // on charge les référent et on applique l'adapter
         initFirebase();
         addContactFirebaseListener();
+    }
+
+    // Retour sur la page Connection si pression du bouton retour Android
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(ContactActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 
     private void initFirebase() {

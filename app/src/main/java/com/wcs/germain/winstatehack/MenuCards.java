@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class MenuCards extends AppCompatActivity {
@@ -12,7 +13,9 @@ public class MenuCards extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_cards);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         final String idToSend = getIntent().getExtras().getString("idToSend");
 
@@ -29,6 +32,7 @@ public class MenuCards extends AppCompatActivity {
         seeDeck.setTypeface(regularFont);
         createCards.setTypeface(regularFont);
         rules.setTypeface(regularFont);
+
 
         final Intent intent = new Intent(MenuCards.this, CardsCollection.class);
         intent.putExtra("idToSend", idToSend);
@@ -49,5 +53,14 @@ public class MenuCards extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // Retour sur la page Connection si pression du bouton retour Android
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(MenuCards.this, ContactActivity.class);
+        startActivity(intent);
     }
 }

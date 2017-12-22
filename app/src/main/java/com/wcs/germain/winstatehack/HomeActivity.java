@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "proutprout";
-    private String statusText;
+    private String statusText ;
     private int totalNbHackteurs = 0;
     private int totalNbwins =0;
     private CardModel mCard;
@@ -33,7 +34,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
@@ -75,11 +78,16 @@ Log.e(TAG, userId);
                     tvUserName.setText(myUser.getFirstName());
                     Log.e(TAG, myUser.getFirstName());
                     nbpersonalWins.setText(String.valueOf(myUser.getNbWin()));
+                    if(myUser.getNbWin()<100){
+                        statusText = "Ami du bonheur";
+                    }
                     if(myUser.getNbWin()<50){
                         statusText = "Stagiaire";
                     }
                     if(myUser.getNbWin()<10){
                         statusText = "Noob";
+                    }else{
+                        statusText = "Donneur de love";
                     }
 
                     status.setText(statusText);
@@ -120,6 +128,7 @@ Log.e(TAG, userId);
             public void onClick(View view) {
                 Intent intentCard = new Intent(HomeActivity.this, ContactActivity.class);
                 startActivity(intentCard);
+                finish();
             }
         });
 
@@ -167,5 +176,10 @@ Log.e(TAG, userId);
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 }
