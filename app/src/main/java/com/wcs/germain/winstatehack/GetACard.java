@@ -137,7 +137,7 @@ public class GetACard extends AppCompatActivity {
         personnage.setBackground(resources.getDrawable(resourceId));
 
         // LOLWIN
-        Button btnLol = findViewById(R.id.getacard_btn_lol);
+        final Button btnLol = findViewById(R.id.getacard_btn_lol);
         btnLol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,6 +148,7 @@ public class GetACard extends AppCompatActivity {
                         ref.child("user").child(mSenderKey).child("nbWin").setValue(nbWinSender);
                         nbWinCreator += 1;
                         ref.child("user").child(mCreatorKey).child("nbWin").setValue(nbWinCreator);
+                        btnLol.setVisibility(View.GONE);
                     }
 
                     @Override
