@@ -314,7 +314,7 @@ public class CreateCards extends AppCompatActivity {
                 Toast.makeText(CreateCards.this, "Votre carte a bien été créee !", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(CreateCards.this, HomeActivity.class));
 
-                getImageResponse(new ImageResponseListener() {
+                /*getImageResponse(new ImageResponseListener() {
                     @Override
                     public void onResult(String response) {
                         getImageResponseFromJson(response);
@@ -325,7 +325,7 @@ public class CreateCards extends AppCompatActivity {
                     public void onError(String error) {
 
                     }
-                });
+                });*/
             }
         });
     }
