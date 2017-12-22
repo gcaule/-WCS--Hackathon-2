@@ -1,5 +1,6 @@
 package com.wcs.germain.winstatehack;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.media.Image;
@@ -40,14 +41,40 @@ public class GetACard extends AppCompatActivity {
         // il faudra recuperer soit un objet soit autre chose jsé pas
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-// Username
-        ref.child("user").child(mIdUserSent).addListenerForSingleValueEvent(new ValueEventListener() {
+        // ReadStatus passe a true
+        ref.child("SentCards").orderByChild("cardId").equalTo(mCard.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                TextView title = findViewById(R.id.getacard_top_title);
-                User user = dataSnapshot.getValue(User.class);
-                String nameToSent = user.getFirstName();
-                title.setText(getApplicationContext().getResources().getString(R.string.getacard_title, nameToSent));
+                for (DataSnapshot dsp : dataSnapshot.getChildren()){
+                    String id = dsp.getKey();
+                    ref.child("SentCards").child(id).child("readStatus").setValue(true);
+                    String senderId = dsp.child("userSenderId").getValue(String.class);
+
+                    if(senderId!=null){
+                        // Username
+                        ref.child("user").child(senderId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User user = dataSnapshot.getValue(User.class);
+                                String name = user.getFirstName();
+                                TextView title = findViewById(R.id.getacard_top_title);
+                                title.setText(getApplicationContext().getResources().getString(R.string.getacard_title, name));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+
+                }
+
+
+
+
+                //ref.child("readStatus").setValue(true);
             }
 
             @Override
@@ -69,5 +96,13 @@ public class GetACard extends AppCompatActivity {
         personnage.setBackground(resources.getDrawable(resourceId));
 
 
+    }
+
+    // Retour sur la page Connection si pression du bouton retour Android
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent intent = new Intent(GetACard.this, HomeActivity.class);
+        startActivity(intent);
     }
 }
