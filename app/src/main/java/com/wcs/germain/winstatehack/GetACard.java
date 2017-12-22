@@ -7,6 +7,10 @@ import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,8 +26,15 @@ import java.util.List;
 
 public class GetACard extends AppCompatActivity {
 
+    private static final String TAG = "creator key : ";
     private CardModel mCard;
     private String mIdUserSent;
+    private String mSenderId;
+    private User mSenderUser;
+    private String mSenderKey;
+    private int nbWinSender;
+    private String mCreatorKey;
+    private int nbWinCreator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +48,28 @@ public class GetACard extends AppCompatActivity {
         mCard = getIntent().getParcelableExtra("object");
         mIdUserSent = getIntent().getStringExtra("idUserSent");
 
+        mCreatorKey = mCard.getCreatorId();
+        Log.e(TAG, mCreatorKey);
+
+
         // TODO ce que je recupere pour l'instant est un exemple
         // il faudra recuperer soit un objet soit autre chose jsé pas
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child("user").orderByChild("id").equalTo(mCreatorKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dsp : dataSnapshot.getChildren()){
+                    nbWinCreator = dsp.child("nbWin").getValue(int.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         // ReadStatus passe a true
         ref.child("SentCards").orderByChild("cardId").equalTo(mCard.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -48,15 +78,17 @@ public class GetACard extends AppCompatActivity {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     String id = dsp.getKey();
                     ref.child("SentCards").child(id).child("readStatus").setValue(true);
-                    String senderId = dsp.child("userSenderId").getValue(String.class);
+                    mSenderId = dsp.child("userSenderId").getValue(String.class);
 
-                    if(senderId!=null){
+                    if(mSenderId!=null){
                         // Username
-                        ref.child("user").child(senderId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        ref.child("user").child(mSenderId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                User user = dataSnapshot.getValue(User.class);
-                                String name = user.getFirstName();
+                                mSenderUser = dataSnapshot.getValue(User.class);
+                                String name = mSenderUser.getFirstName();
+                                mSenderKey = dataSnapshot.getKey();
+                                nbWinSender = mSenderUser.getNbWin();
                                 TextView title = findViewById(R.id.getacard_top_title);
                                 title.setText(getApplicationContext().getResources().getString(R.string.getacard_title, name));
                             }
@@ -104,7 +136,39 @@ public class GetACard extends AppCompatActivity {
         resourceId = resources.getIdentifier(mCard.getImage(), "drawable", getApplicationContext().getPackageName());
         personnage.setBackground(resources.getDrawable(resourceId));
 
+        // LOLWIN
+        Button btnLol = findViewById(R.id.getacard_btn_lol);
+        btnLol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ref.child("user").orderByChild("id").equalTo(mSenderKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        nbWinSender += 1;
+                        ref.child("user").child(mSenderKey).child("nbWin").setValue(nbWinSender);
+                        nbWinCreator += 1;
+                        ref.child("user").child(mCreatorKey).child("nbWin").setValue(nbWinCreator);
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
+
+        // Bouton répondre
+        TextView repondre = findViewById(R.id.getacard_btn_répondre);
+        repondre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iResponse = new Intent(GetACard.this, MenuCards.class);
+                iResponse.putExtra("response", mSenderId);
+                startActivity(iResponse);
+            }
+        });
 
 
     }
