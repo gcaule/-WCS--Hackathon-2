@@ -46,9 +46,6 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
     private String mIdToSend;
     private String mUserId;
 
-    private static int SPLASH_TIME_OUT = 3000;
-    private Handler mHandler = new Handler();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,16 +69,6 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
                     TextView bottom = findViewById(R.id.deck_ok);
                     bottom.setVisibility(View.VISIBLE);
                     bottom.setText("Vous n'avez aucune carte à votre collection :(");
-
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                                Intent i = new Intent(CardsCollection.this, MenuCards.class);
-                                startActivity(i);
-                                finish();
-                        }
-                    }, SPLASH_TIME_OUT);
-
                 }
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     CardModel cardModel = new CardModel();
@@ -95,21 +82,20 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
                                 mAdapter.notifyDataSetChanged();
                             }
                         }
-
-                        if (mItems.size() > 0) {
-                            TextView nbreCards = findViewById(R.id.deck_nbre);
-                            nbreCards.setVisibility(View.VISIBLE);
-                            nbreCards.setText(getResources().getString(R.string.deck_nbrecartes, String.valueOf(mItems.size())));
-                        }
                     }
+                }
 
-                    else {
+                if (mItems.size() > 0) {
+                    TextView nbreCards = findViewById(R.id.deck_nbre);
+                    nbreCards.setVisibility(View.VISIBLE);
+                    nbreCards.setText(getResources().getString(R.string.deck_nbrecartes, String.valueOf(mItems.size())));
+                }
+                else {
 
-                        TextView bottom = findViewById(R.id.deck_ok);
-                        bottom.setVisibility(View.VISIBLE);
-                        bottom.setText("Vous n'avez aucune carte à votre collection :(");
-                    }
-                    
+                    TextView bottom = findViewById(R.id.deck_ok);
+                    bottom.setVisibility(View.VISIBLE);
+                    bottom.setText("Vous n'avez aucune carte à votre collection :(");
+
                 }
 
             }
