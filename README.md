@@ -1,2 +1,5 @@
-# -WCS--Hackathon-2
-Hackathon 2 - WinState
+Wild Code School -- https://wildcodeschool.fr/
+
+Second hackathon (30 hours non stop coding), quite a lot of fun.
+
+Bound to be perfected. ;)
