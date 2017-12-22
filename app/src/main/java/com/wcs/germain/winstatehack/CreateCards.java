@@ -106,6 +106,7 @@ public class CreateCards extends AppCompatActivity {
 
         finish();
         Intent intent = new Intent(CreateCards.this, MenuCards.class);
+        intent.putExtra("idToSend", mIdToSend);
         startActivity(intent);
     }
 
