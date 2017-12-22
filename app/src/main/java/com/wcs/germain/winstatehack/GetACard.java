@@ -105,6 +105,8 @@ public class GetACard extends AppCompatActivity {
         personnage.setBackground(resources.getDrawable(resourceId));
 
 
+
+
     }
 
     // Retour sur la page Connection si pression du bouton retour Android

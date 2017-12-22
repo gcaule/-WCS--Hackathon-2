@@ -73,6 +73,8 @@ public class DeckAdapter extends ArrayAdapter<Pair<Pair<CardModel, String>, Inte
             resourceId = resources.getIdentifier(model.getImage(), "drawable", parent.getContext().getPackageName());
             personnage.setBackground(resources.getDrawable(resourceId));
 
+
+            // Pour envoyer la carte
             card.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(final View view) {
@@ -85,8 +87,25 @@ public class DeckAdapter extends ArrayAdapter<Pair<Pair<CardModel, String>, Inte
                     ref.child("SentCards").child(id).child("userReceiverId").setValue(userToSend);
                     ref.child("SentCards").child(id).child("readStatus").setValue(false);
 
-                    Toast.makeText(view.getContext(), "Votre carte a bien été envoyée!", Toast.LENGTH_SHORT).show();
-                    view.getContext().startActivity(new Intent(view.getContext(), HomeActivity.class));
+                    ref.child("Cards").child(model.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            CardModel cardModel = dataSnapshot.getValue(CardModel.class);
+                            List<String> authorizedList = cardModel.getAuthorizedId();
+                            authorizedList.add(userToSend);
+                            ref.child("Cards").child(model.getId()).child("authorizedId").setValue(authorizedList);
+
+                            Toast.makeText(view.getContext(), "Votre carte a bien été envoyée!", Toast.LENGTH_SHORT).show();
+                            view.getContext().startActivity(new Intent(view.getContext(), HomeActivity.class));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                     return false;
                 }
             });

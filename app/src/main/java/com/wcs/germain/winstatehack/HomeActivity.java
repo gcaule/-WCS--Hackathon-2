@@ -186,7 +186,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // On recupere les Cards recus !
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("SentCards").orderByKey().addValueEventListener(new ValueEventListener() {
+        ref.child("SentCards").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (listCard.size() > 0) {
