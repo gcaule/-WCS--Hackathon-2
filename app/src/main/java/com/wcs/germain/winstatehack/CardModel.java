@@ -1,4 +1,4 @@
-package com.wcs.germain.winstatehack.Cards;
+package com.wcs.germain.winstatehack;
 
 import android.graphics.drawable.Drawable;
 

@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.wcs.germain.winstatehack.Cards.MenuCards;
-
 import java.util.List;
 
 /**

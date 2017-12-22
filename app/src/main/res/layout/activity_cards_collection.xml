@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.wcs.germain.winstatehack.CardsCollection">
+
+    <TextView
+        android:id="@+id/deck_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Votre deck"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:textColor="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/deck_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Je choisis cette carte !"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:background="@drawable/buttonbordercard"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/colorBlue" />
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/left"
+            android:textSize="30sp"
+            android:layout_margin="5dp"
+            android:layout_centerVertical="true"
+            android:scaleY="0"
+            android:background="@android:color/black"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:id="@+id/up"
+            android:textSize="30sp"
+            android:layout_margin="5dp"
+            android:layout_centerHorizontal="true"
+            android:scaleX="0"
+            android:background="@android:color/black"/>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/right"
+            android:textSize="30sp"
+            android:layout_margin="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:scaleY="0"
+            android:background="@android:color/black"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:id="@+id/down"
+            android:textSize="30sp"
+            android:layout_margin="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:scaleX="0"
+            android:background="@android:color/black"/>
+
+        <com.db.rossdeckview.RossDeckView
+            xmlns:derdidaz="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/decklayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            derdidaz:stack_padding="6dp"
+            derdidaz:stack_scale=".1"/>
+
+    </RelativeLayout>
+
