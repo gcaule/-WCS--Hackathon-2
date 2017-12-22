@@ -27,7 +27,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
             android:noHistory="true"
@@ -38,14 +39,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContactActivity" />
+
+        <activity android:name=".ContactActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ConnectionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".MenuCards" />
-        <activity android:name=".CreateCards" />
-        <activity android:name=".CardsCollection"></activity>
 
+        <activity android:name=".MenuCards"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".CreateCards"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".CardsCollection"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".GetACard"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

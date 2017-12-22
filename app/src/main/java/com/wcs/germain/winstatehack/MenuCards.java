@@ -10,12 +10,23 @@ import android.widget.TextView;
 
 public class MenuCards extends AppCompatActivity {
 
+    private String mIdToSend = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_cards);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+        String response = getIntent().getStringExtra("response");
+        final String create = getIntent().getStringExtra("idToSend");
+
+        if (response != null){
+            mIdToSend = response;
+        } else{
+            mIdToSend = create;
+        }
 
         TextView topTitle = findViewById(R.id.menucards_tv_top);
         TextView seeDeck = findViewById(R.id.menucards_tv_fromcollection);
@@ -30,18 +41,25 @@ public class MenuCards extends AppCompatActivity {
         seeDeck.setTypeface(regularFont);
         createCards.setTypeface(regularFont);
         rules.setTypeface(regularFont);
-      
+
+
+        final Intent intent = new Intent(MenuCards.this, CardsCollection.class);
+        intent.putExtra("idToSend", mIdToSend);
         seeDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuCards.this, CardsCollection.class));
+                final Intent intent = new Intent(MenuCards.this, CardsCollection.class);
+                intent.putExtra("idToSend", mIdToSend);
+                startActivity(intent);
             }
         });
 
         createCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuCards.this, CreateCards.class));
+                final Intent intent = new Intent(MenuCards.this, CreateCards.class);
+                intent.putExtra("idToSend", mIdToSend);
+                startActivity(intent);
             }
         });
     }

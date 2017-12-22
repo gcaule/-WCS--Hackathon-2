@@ -95,7 +95,7 @@ public class ConnectionActivity extends AppCompatActivity {
 
                         final FirebaseDatabase database = FirebaseDatabase.getInstance();
                         final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-                        databaseRef.child("user").orderByChild("firstName").equalTo(firstNameValue)
+                        databaseRef.child("user").orderByChild("firstName").equalTo(firstNameValue.trim())
                                 .addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,10 +111,24 @@ public class ConnectionActivity extends AppCompatActivity {
                                                             if(dataSnapshot!=null && dataSnapshot.getChildren()!=null &&
                                                                     dataSnapshot.getChildren().iterator().hasNext()){
 
-                                                                startActivity(new Intent
-                                                                        (ConnectionActivity.this,
-                                                                                HomeActivity.class));
-                                                                finish();
+                                                                for (DataSnapshot sp : dataSnapshot.getChildren()) {
+                                                                    User user = sp.getValue(User.class);
+                                                                    String userKey = user.getId();
+
+                                                                    SharedPreferences userPref = getSharedPreferences("Login", 0);
+                                                                    userPref.edit().putString("userID", userKey).apply();
+                                                                    userPref.edit().putString("userMail", mailValue).apply();
+
+                                                                    LinearLayout progressBar = findViewById(R.id.progressBarLayout);
+                                                                    progressBar.setVisibility(View.VISIBLE);
+                                                                    validate.setEnabled(false);
+
+                                                                    startActivity(new Intent
+                                                                            (ConnectionActivity.this,
+                                                                                    HomeActivity.class));
+                                                                    finish();
+                                                                    break;
+                                                                }
                                                             } else {
                                                                 password.setError(getString(R.string.invalid_entry));
                                                                 Toast.makeText(ConnectionActivity.this,

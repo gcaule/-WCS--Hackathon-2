@@ -43,7 +43,7 @@ public class ContactAdapter  extends BaseAdapter{
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         mInflater = (LayoutInflater) mActivity.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View itemView = mInflater.inflate(R.layout.contacts_item,null);
 
@@ -57,7 +57,9 @@ public class ContactAdapter  extends BaseAdapter{
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemView.getContext().startActivity(new Intent(itemView.getContext(), MenuCards.class));
+                Intent intent = new Intent(itemView.getContext(), MenuCards.class);
+                intent.putExtra("idToSend", mListeContact.get(i).getId());
+                itemView.getContext().startActivity(intent);
             }
         });
 

@@ -1,6 +1,8 @@
 package com.wcs.germain.winstatehack;
 
+import android.content.SharedPreferences;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.db.rossdeckview.FlingChief;
@@ -41,6 +44,8 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
     private int[] mColors;
 
     private int mCount = 0;
+    private String mIdToSend;
+    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,16 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
         setContentView(R.layout.activity_cards_collection);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
+        final Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
+
+        TextView deckTitle = findViewById(R.id.deck_title);
+
+        deckTitle.setTypeface(boldFont);
+
+        mIdToSend = getIntent().getExtras().getString("idToSend");
+        // Shared pref
+        SharedPreferences user = getSharedPreferences("Login", 0);
+        mUserId = user.getString("userID","");
         mColors  = getResources().getIntArray(R.array.cardsBackgroundColors);
         mItems = new ArrayList<Pair<Pair<CardModel, String>, Integer>>();
 
@@ -57,12 +72,42 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mItems.clear();
+                if (dataSnapshot.getValue() == null){
+                    TextView deckOK = findViewById(R.id.deck_ok);
+                    deckOK.setVisibility(View.VISIBLE);
+                    deckOK.setTypeface(boldFont);
+                    deckOK.setText("Vous n'avez aucune carte à votre collection :(");
+                }
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     CardModel cardModel = new CardModel();
                     cardModel = dsp.getValue(CardModel.class);
-                    mItems.add(newItem(cardModel));
-                    mAdapter.notifyDataSetChanged();
+                    List<String> listAuthorized = cardModel.getAuthorizedId();
+
+                    if (listAuthorized != null) {
+                        for (int i = 0; i < listAuthorized.size(); i++) {
+                            if (listAuthorized.get(i).equals(mUserId)) {
+                                mItems.add(newItem(cardModel));
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
                 }
+
+                if (mItems.size() > 0) {
+                    TextView deckNombre = findViewById(R.id.deck_nbre);
+                    deckNombre.setVisibility(View.VISIBLE);
+                    deckNombre.setTypeface(boldFont);
+                    deckNombre.setText(getResources().getString(R.string.deck_nbrecartes, String.valueOf(mItems.size())));
+                }
+                else {
+
+                    TextView deckOK = findViewById(R.id.deck_ok);
+                    deckOK.setVisibility(View.VISIBLE);
+                    deckOK.setTypeface(boldFont);
+                    deckOK.setText("Vous n'avez aucune carte à votre collection :(");
+
+                }
+
             }
 
             @Override
@@ -91,7 +136,7 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
     public void onBackPressed() {
 
         finish();
-        Intent intent = new Intent(CardsCollection.this, CreateCards.class);
+        Intent intent = new Intent(CardsCollection.this, MenuCards.class);
         startActivity(intent);
     }
 
@@ -145,7 +190,7 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
 
     private Pair<Pair<CardModel, String>, Integer> newItem(CardModel cardModel){
 
-        Pair<Pair<CardModel, String>, Integer> res = new Pair<>(new Pair<>(cardModel, "USERTOSENDTEST"), mColors[mCount]);
+        Pair<Pair<CardModel, String>, Integer> res = new Pair<>(new Pair<>(cardModel, mIdToSend), mColors[mCount]);
         mCount = (mCount >= mColors.length - 1) ? 0 : mCount + 1;
         return res;
     }

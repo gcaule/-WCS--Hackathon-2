@@ -25,6 +25,15 @@
     <string name="incorrect_password">Mot de passe incorrect !</string>
 
     <string name="user_created">Joueur créé !</string>
+    <string name="getacard_title">%1$s vous a envoyé cette carte !</string>
+    <string name="sourires">%1$s sourires</string>
+    <string name="deck_nbrecartes">Vous avez %1$s cartes ! Bien joué !</string>
+
+    <!-- DialogBox deconnection-->
+    <string name="deconnection_title">Vous allez vous déconnecter !</string>
+    <string name="deconnection">Vous ne pourrez plus envoyer de sourires, cela causera le déclin de l\'environnement proche et à terme provoquera la disparition de l\'Univers... Est-ce vraiment ce que vous voulez ?</string>
+    <string name="deconnection_yes">Oui, c\'est l\'heure de ma sieste.</string>
+    <string name="deconnection_no">Non, je testais juste le bouton.</string>
 
 
 </resources>

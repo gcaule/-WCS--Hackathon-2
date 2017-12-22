@@ -4,6 +4,8 @@ package com.wcs.germain.winstatehack;
  * Created by wilder on 21/12/17.
  */
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -29,6 +31,7 @@ public class DeckAdapter extends ArrayAdapter<Pair<Pair<CardModel, String>, Inte
 
 
     private final int mResource;
+    private String mUserId;
 
     DeckAdapter(@NonNull Context context, @NonNull List<Pair<Pair<CardModel, String>, Integer>> objects) {
         super(context, R.layout.item, objects);
@@ -39,6 +42,10 @@ public class DeckAdapter extends ArrayAdapter<Pair<Pair<CardModel, String>, Inte
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull final ViewGroup parent) {
+
+        // Shared pref
+        SharedPreferences user = parent.getContext().getSharedPreferences("Login", 0);
+        mUserId = user.getString("userID","");
 
         final RelativeLayout layout;
         if (convertView == null) {
@@ -66,21 +73,27 @@ public class DeckAdapter extends ArrayAdapter<Pair<Pair<CardModel, String>, Inte
             resourceId = resources.getIdentifier(model.getImage(), "drawable", parent.getContext().getPackageName());
             personnage.setBackground(resources.getDrawable(resourceId));
 
+
+            // Pour envoyer la carte
             card.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View view) {
+                public boolean onLongClick(final View view) {
                     final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                    ref.child("SentCards").addListenerForSingleValueEvent(new ValueEventListener() {
+                    String id = ref.push().getKey();
+
+                    ref.child("SentCards").child(id).child("cardId").setValue(model.getId());
+                    ref.child("SentCards").child(id).child("userSenderId").setValue(mUserId);
+                    ref.child("SentCards").child(id).child("userReceiverId").setValue(userToSend);
+                    ref.child("SentCards").child(id).child("readStatus").setValue(false);
+
+                    //On ajoute les points à l'user
+                    ref.child("user").child(mUserId).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            String id = ref.push().getKey();
-
-                            ref.child("SentCards").child(id).child("cardId").setValue(model.getId());
-                            ref.child("SentCards").child(id).child("userSenderId").setValue("CurrentUserId");
-                            ref.child("SentCards").child(id).child("userReceiverId").setValue(userToSend);
-                            ref.child("SentCards").child(id).child("readStatus").setValue(false);
-
+                            User user = dataSnapshot.getValue(User.class);
+                            int nbWin = user.getNbWin();
+                            ref.child("user").child(mUserId).child("nbWin").setValue(nbWin+1);
                         }
 
                         @Override
@@ -88,7 +101,27 @@ public class DeckAdapter extends ArrayAdapter<Pair<Pair<CardModel, String>, Inte
 
                         }
                     });
-                    Toast.makeText(view.getContext(), "cazedcezac", Toast.LENGTH_SHORT).show();
+
+                    // On rajoute la carte aux authorized
+                    ref.child("Cards").child(model.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            CardModel cardModel = dataSnapshot.getValue(CardModel.class);
+                            List<String> authorizedList = cardModel.getAuthorizedId();
+                            authorizedList.add(userToSend);
+                            ref.child("Cards").child(model.getId()).child("authorizedId").setValue(authorizedList);
+
+                            Toast.makeText(view.getContext(), "Votre carte a bien été envoyée!", Toast.LENGTH_SHORT).show();
+                            view.getContext().startActivity(new Intent(view.getContext(), HomeActivity.class));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                     return false;
                 }
             });
