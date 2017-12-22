@@ -126,6 +126,7 @@ public class ConnectionActivity extends AppCompatActivity {
                                                                             (ConnectionActivity.this,
                                                                                     HomeActivity.class));
                                                                     finish();
+                                                                    break;
                                                                 }
                                                             } else {
                                                                 password.setError(getString(R.string.invalid_entry));
