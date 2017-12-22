@@ -155,9 +155,13 @@ Log.e(TAG, userId);
 
         // On recupere les Cards recus !
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("SentCards").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child("SentCards").orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (listCard.size() > 0) {
+                    listCard.clear();
+                }
+
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     String userReceveirId = dsp.child("userReceiverId").getValue(String.class);
                     boolean status = dsp.child("readStatus").getValue(boolean.class);
@@ -172,6 +176,12 @@ Log.e(TAG, userId);
                                 CardModel cardModel = dsp2.getValue(CardModel.class);
                                 mCard = cardModel;
                                 listCard.add(cardModel);
+
+                                TextView nbreSmile = findViewById(R.id.nbre_smile);
+                                if (listCard.size() != 0){
+                                    nbreSmile.setVisibility(View.VISIBLE);
+                                    nbreSmile.setText(getApplicationContext().getResources().getString(R.string.sourires, String.valueOf(listCard.size())));
+                                }
                             }
 
                             @Override
@@ -181,6 +191,8 @@ Log.e(TAG, userId);
                         });
                     }
                 }
+
+
             }
 
             @Override
@@ -189,7 +201,10 @@ Log.e(TAG, userId);
             }
         });
 
+
     }
+
+
 
     @Override
     public void onBackPressed() {

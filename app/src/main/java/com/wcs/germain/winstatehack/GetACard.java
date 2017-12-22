@@ -67,14 +67,23 @@ public class GetACard extends AppCompatActivity {
                             }
                         });
                     }
-
-
                 }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
 
-
-                //ref.child("readStatus").setValue(true);
+        // On rajoute la carte dans le Autorized id
+        ref.child("Cards").child(mCard.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                CardModel card = dataSnapshot.getValue(CardModel.class);
+                List<String> list = card.getAuthorizedId();
+                list.add(userId);
+                ref.child("Cards").child(mCard.getId()).child("authorizedId").setValue(list);
             }
 
             @Override
