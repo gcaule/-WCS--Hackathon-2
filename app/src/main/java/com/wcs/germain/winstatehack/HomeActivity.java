@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
         String userId = user.getString("userID","");
-Log.e(TAG, userId);
+        Log.e(TAG, userId);
 
         ImageView btnSendCard = findViewById(R.id.send_card);
         final TextView nbHackteurs = findViewById(R.id.nb_hackteurs);
