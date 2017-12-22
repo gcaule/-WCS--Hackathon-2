@@ -7,6 +7,8 @@ import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +26,9 @@ public class GetACard extends AppCompatActivity {
 
     private CardModel mCard;
     private String mIdUserSent;
+    private User mSenderUser;
+    private String mSenderKey;
+    private int nbWinSender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +60,10 @@ public class GetACard extends AppCompatActivity {
                         ref.child("user").child(senderId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                User user = dataSnapshot.getValue(User.class);
-                                String name = user.getFirstName();
+                                mSenderUser = dataSnapshot.getValue(User.class);
+                                String name = mSenderUser.getFirstName();
+                                mSenderKey = dataSnapshot.getKey();
+                                nbWinSender = mSenderUser.getNbWin();
                                 TextView title = findViewById(R.id.getacard_top_title);
                                 title.setText(getApplicationContext().getResources().getString(R.string.getacard_title, name));
                             }
@@ -95,6 +102,26 @@ public class GetACard extends AppCompatActivity {
         resourceId = resources.getIdentifier(mCard.getImage(), "drawable", getApplicationContext().getPackageName());
         personnage.setBackground(resources.getDrawable(resourceId));
 
+        // LOLWIN
+        Button btnLol = findViewById(R.id.getacard_btn_lol);
+        btnLol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ref.child("user").orderByChild("id").equalTo(mSenderKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        nbWinSender += 1;
+                        ref.child("user").child(mSenderKey).child("nbWin").setValue(nbWinSender);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
 
     }
 
