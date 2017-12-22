@@ -196,7 +196,7 @@ public class HomeActivity extends AppCompatActivity {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     String userReceveirId = dsp.child("userReceiverId").getValue(String.class);
                     boolean status = dsp.child("readStatus").getValue(boolean.class);
-                    if (userReceveirId.equals(userId) && status == false){
+                    if (userId!= null && userReceveirId!= null && userReceveirId.equals(userId) && status == false){
                         String id = dsp.child("cardId").getValue(String.class);
                         mIdUserSent = dsp.child("userSenderId").getValue(String.class);
                         DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
