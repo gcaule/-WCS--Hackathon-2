@@ -1,11 +1,14 @@
 package com.wcs.germain.winstatehack;
 
+import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.db.rossdeckview.FlingChief;
@@ -39,12 +42,20 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
     private int[] mColors;
 
     private int mCount = 0;
+    private String mIdToSend;
+    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cards_collection);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
+        mIdToSend = getIntent().getExtras().getString("idToSend");
+        // Shared pref
+        SharedPreferences user = getSharedPreferences("Login", 0);
+        mUserId = user.getString("userID","");
         mColors  = getResources().getIntArray(R.array.cardsBackgroundColors);
         mItems = new ArrayList<Pair<Pair<CardModel, String>, Integer>>();
 
@@ -80,6 +91,15 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
         mRightView = findViewById(R.id.right);
         mDownView = findViewById(R.id.down);
 
+    }
+
+    // Retour sur la page Connection si pression du bouton retour Android
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(CardsCollection.this, CreateCards.class);
+        startActivity(intent);
     }
 
     @Override
@@ -132,7 +152,7 @@ public class CardsCollection extends AppCompatActivity implements FlingChiefList
 
     private Pair<Pair<CardModel, String>, Integer> newItem(CardModel cardModel){
 
-        Pair<Pair<CardModel, String>, Integer> res = new Pair<>(new Pair<>(cardModel, "USERTOSENDTEST"), mColors[mCount]);
+        Pair<Pair<CardModel, String>, Integer> res = new Pair<>(new Pair<>(cardModel, mIdToSend), mColors[mCount]);
         mCount = (mCount >= mColors.length - 1) ? 0 : mCount + 1;
         return res;
     }

@@ -2,13 +2,17 @@ package com.wcs.germain.winstatehack;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,25 +20,33 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "proutprout";
     private String statusText ;
     private int totalNbHackteurs = 0;
     private int totalNbwins =0;
+    private CardModel mCard;
+    private String mIdUserSent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
-        String userId = user.getString("userID","");
-        Log.e(TAG, userId);
+        final String userId = user.getString("userID","");
+Log.e(TAG, userId);
 
         ImageView btnSendCard = findViewById(R.id.send_card);
+        ImageView btnSendSmile = findViewById(R.id.send_smile);
         final TextView nbHackteurs = findViewById(R.id.nb_hackteurs);
         final TextView nbTotalWins = findViewById(R.id.nb_total_wins);
         final TextView nbpersonalWins = findViewById(R.id.nb_personal_wins);
@@ -122,5 +134,62 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //Go to smile
+        // TODO mettre le vrai link
+        final List<CardModel> listCard = new ArrayList<>();
+        btnSendSmile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCard != null) {
+                    Intent intentSmile = new Intent(HomeActivity.this, GetACard.class);
+                    intentSmile.putExtra("object", mCard);
+                    intentSmile.putExtra("idUserSent", mIdUserSent);
+                    startActivity(intentSmile);
+                } else{
+                    Toast.makeText(HomeActivity.this, "Vous n'avez pas recu de sourire :(", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // On recupere les Cards recus !
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("SentCards").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dsp : dataSnapshot.getChildren()){
+                    String userReceveirId = dsp.child("userReceiverId").getValue(String.class);
+                    if (userReceveirId.equals(userId)){
+                        String id = dsp.child("cardId").getValue(String.class);
+                        mIdUserSent = dsp.child("userSenderId").getValue(String.class);
+                        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
+                        ref2.child("Cards").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dsp2) {
+
+                                CardModel cardModel = dsp2.getValue(CardModel.class);
+                                mCard = cardModel;
+                                listCard.add(cardModel);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 }
