@@ -331,6 +331,7 @@ public class CreateCards extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(CreateCards.this, "Votre carte a bien été créee !", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(CreateCards.this, HomeActivity.class));
+                finish();
 
                 /*getImageResponse(new ImageResponseListener() {
                     @Override
