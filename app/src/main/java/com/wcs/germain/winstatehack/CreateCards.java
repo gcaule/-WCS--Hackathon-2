@@ -42,12 +42,17 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CreateCards extends AppCompatActivity {
 
+    static final int REQUEST_TAKE_PHOTO = 1;
+    String mCurrentPhotoPath;
+    int happiness;
     private RelativeLayout mCard;
     private ImageView mCardImage;
     private TextView mTextCard;
@@ -55,21 +60,16 @@ public class CreateCards extends AppCompatActivity {
     private String mImage = "";
     private String mIdToSend;
     private String mUserId;
-
-    static final int REQUEST_TAKE_PHOTO = 1;
-    String mCurrentPhotoPath;
-
     private Context context;
-
     private String API_URL = "https://api-face.sightcorp.com/api/detect/";
     private String API_KEY = "d6b95f4eaac74193837bacbfbc194021";
-
-    int happiness;
 
     public CreateCards(Context context) {
         this.context = context;
     }
-    public CreateCards() { }
+
+    public CreateCards() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class CreateCards extends AppCompatActivity {
         mIdToSend = getIntent().getExtras().getString("idToSend");
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
-        mUserId = user.getString("userID","");
+        mUserId = user.getString("userID", "");
 
         Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
         Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Bold.otf");
@@ -140,19 +140,22 @@ public class CreateCards extends AppCompatActivity {
                 mCard.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.card_grey));
                 mColor = "card_grey";
             }
-        });blue.setOnClickListener(new View.OnClickListener() {
+        });
+        blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCard.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.card_blue));
                 mColor = "card_blue";
             }
-        });yellow.setOnClickListener(new View.OnClickListener() {
+        });
+        yellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCard.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.card_yellow));
                 mColor = "card_yellow";
             }
-        });white.setOnClickListener(new View.OnClickListener() {
+        });
+        white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCard.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.card_white));
@@ -198,25 +201,29 @@ public class CreateCards extends AppCompatActivity {
                 mCardImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.oracle));
                 mImage = "oracle";
             }
-        });alchemist.setOnClickListener(new View.OnClickListener() {
+        });
+        alchemist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCardImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.alchemiste));
                 mImage = "alchemiste";
             }
-        });magicien.setOnClickListener(new View.OnClickListener() {
+        });
+        magicien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCardImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.magicien));
                 mImage = "magicien";
             }
-        });compteuse.setOnClickListener(new View.OnClickListener() {
+        });
+        compteuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCardImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.compteuse));
                 mImage = "compteuse";
             }
-        });philosophe.setOnClickListener(new View.OnClickListener() {
+        });
+        philosophe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCardImage.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.philosophe));
@@ -225,7 +232,7 @@ public class CreateCards extends AppCompatActivity {
         });
     }
 
-    private void showMessage(){
+    private void showMessage() {
         mTextCard = findViewById(R.id.createcards_card_textview);
 
         Typeface regularFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat_Regular.otf");
@@ -251,9 +258,9 @@ public class CreateCards extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (TextUtils.isEmpty(editable)){
+                if (TextUtils.isEmpty(editable)) {
                     send.setVisibility(View.GONE);
-                }else {
+                } else {
                     send.setVisibility(View.VISIBLE);
                 }
             }
@@ -293,7 +300,7 @@ public class CreateCards extends AppCompatActivity {
                 authorizedId.add(mUserId);
                 String text = mTextCard.getText().toString();
                 // TODO trouver le moyen de set le type
-                CardModel card = new CardModel(id, gravity, width, height, mColor, mImage, text, mUserId, null,authorizedId );
+                CardModel card = new CardModel(id, gravity, width, height, mColor, mImage, text, mUserId, null, authorizedId);
                 ref.child("Cards").child(id).setValue(card);
 
                 // La carte s'envoi a la personne
@@ -311,7 +318,7 @@ public class CreateCards extends AppCompatActivity {
                     @Override
                     public void onResult(String response) {
                         getImageResponseFromJson(response);
-                        Toast.makeText(getBaseContext(),String.valueOf(happiness), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), String.valueOf(happiness), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -405,7 +412,7 @@ public class CreateCards extends AppCompatActivity {
             jObject = new JSONObject(response);
 
             JSONArray jArray = jObject.getJSONArray("people");
-            for (int i=0; i < jArray.length(); i++) {
+            for (int i = 0; i < jArray.length(); i++) {
                 JSONObject emotionsObject = ((JSONObject) jArray.get(i)).getJSONObject("emotions");
                 happiness = Integer.parseInt(emotionsObject.getString("happiness"));
             }
@@ -419,6 +426,7 @@ public class CreateCards extends AppCompatActivity {
 
     public interface ImageResponseListener {
         void onResult(String response);
+
         void onError(String error);
     }
 }

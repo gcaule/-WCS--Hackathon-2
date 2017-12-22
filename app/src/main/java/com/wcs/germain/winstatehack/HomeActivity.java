@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     private int totalNbHackteurs = 0;
     private int totalNbwins =0;
     private CardModel mCard;
+    private String mIdUserSent;
 
 
     @Override
@@ -138,9 +140,14 @@ Log.e(TAG, userId);
         btnSendSmile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentSmile = new Intent(HomeActivity.this, GetACard.class);
-                intentSmile.putExtra("object", mCard);
-                startActivity(intentSmile);
+                if (mCard != null) {
+                    Intent intentSmile = new Intent(HomeActivity.this, GetACard.class);
+                    intentSmile.putExtra("object", mCard);
+                    intentSmile.putExtra("idUserSent", mIdUserSent);
+                    startActivity(intentSmile);
+                } else{
+                    Toast.makeText(HomeActivity.this, "Vous n'avez pas recu de sourire :(", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -153,10 +160,13 @@ Log.e(TAG, userId);
                     String userReceveirId = dsp.child("userReceiverId").getValue(String.class);
                     if (userReceveirId.equals(userId)){
                         String id = dsp.child("cardId").getValue(String.class);
-                        ref.child("Cards").orderByKey().equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                        mIdUserSent = dsp.child("userSenderId").getValue(String.class);
+                        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
+                        ref2.child("Cards").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                CardModel cardModel = dataSnapshot.getValue(CardModel.class);
+                            public void onDataChange(DataSnapshot dsp2) {
+
+                                CardModel cardModel = dsp2.getValue(CardModel.class);
                                 mCard = cardModel;
                                 listCard.add(cardModel);
                             }

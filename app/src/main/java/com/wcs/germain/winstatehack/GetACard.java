@@ -22,6 +22,7 @@ import java.util.List;
 public class GetACard extends AppCompatActivity {
 
     private CardModel mCard;
+    private String mIdUserSent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +32,16 @@ public class GetACard extends AppCompatActivity {
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
         final String userId = user.getString("userID", "");
+
         mCard = getIntent().getParcelableExtra("object");
+        mIdUserSent = getIntent().getStringExtra("idUserSent");
 
         // TODO ce que je recupere pour l'instant est un exemple
         // il faudra recuperer soit un objet soit autre chose jsé pas
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
 // Username
-        String idUserSent = mCard.getId();
-        ref.child("user").orderByKey().equalTo(idUserSent).addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child("user").child(mIdUserSent).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 TextView title = findViewById(R.id.getacard_top_title);
@@ -54,9 +56,7 @@ public class GetACard extends AppCompatActivity {
             }
         });
 
-        ImageView image = findViewById(R.id.createcards_card_image);
         TextView message = findViewById(R.id.createcards_card_textview);
-
         message.setText(mCard.getText());
         // la couleur
         RelativeLayout cardLayout = findViewById(R.id.createcards_card);
@@ -64,7 +64,7 @@ public class GetACard extends AppCompatActivity {
         int resourceId = resources.getIdentifier(mCard.getColor(), "drawable", getApplicationContext().getPackageName());
         cardLayout.setBackground(resources.getDrawable(resourceId));
         // le personnage
-        ImageView personnage = findViewById(R.id.item_card_image);
+        ImageView personnage = findViewById(R.id.createcards_card_image);
         resourceId = resources.getIdentifier(mCard.getImage(), "drawable", getApplicationContext().getPackageName());
         personnage.setBackground(resources.getDrawable(resourceId));
 
