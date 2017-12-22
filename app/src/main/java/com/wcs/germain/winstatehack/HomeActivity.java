@@ -143,7 +143,6 @@ Log.e(TAG, userId);
                 if (mCard != null) {
                     Intent intentSmile = new Intent(HomeActivity.this, GetACard.class);
                     intentSmile.putExtra("object", mCard);
-                    intentSmile.putExtra("idUserSent", mIdUserSent);
                     startActivity(intentSmile);
                 } else{
                     Toast.makeText(HomeActivity.this, "Vous n'avez pas recu de sourire :(", Toast.LENGTH_SHORT).show();
@@ -153,14 +152,13 @@ Log.e(TAG, userId);
 
         // On recupere les Cards recus !
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("SentCards").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child("SentCards").orderByKey().limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()){
                     String userReceveirId = dsp.child("userReceiverId").getValue(String.class);
-                    if (userReceveirId.equals(userId)){
+                    if (userReceveirId.equals(userId) ){
                         String id = dsp.child("cardId").getValue(String.class);
-                        mIdUserSent = dsp.child("userSenderId").getValue(String.class);
                         DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();
                         ref2.child("Cards").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
