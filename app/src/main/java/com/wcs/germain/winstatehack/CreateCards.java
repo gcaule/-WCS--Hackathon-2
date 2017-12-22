@@ -78,7 +78,7 @@ public class CreateCards extends AppCompatActivity {
         setContentView(R.layout.activity_create_cards);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        mIdToSend = getIntent().getExtras().getString("idToSend");
+        mIdToSend = getIntent().getStringExtra("idToSend");
         // Shared pref
         SharedPreferences user = getSharedPreferences("Login", 0);
         mUserId = user.getString("userID", "");

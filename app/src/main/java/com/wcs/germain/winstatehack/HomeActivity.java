@@ -141,8 +141,6 @@ Log.e(TAG, userId);
             @Override
             public void onClick(View view) {
                 if (mCard != null) {
-
-
                     Intent intentSmile = new Intent(HomeActivity.this, GetACard.class);
                     intentSmile.putExtra("object", listCard.get(0));
                     intentSmile.putExtra("idUserSent", mIdUserSent);
